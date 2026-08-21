@@ -14,12 +14,13 @@
         }
         body { 
             font-family: system-ui, -apple-system, sans-serif; 
-            background-color: #ffffff; 
+            /* Fundo "Off-white" muito sutil para criar profundidade e fazer as caixas brancas flutuarem */
+            background-color: #f8fafc; 
             -webkit-tap-highlight-color: transparent; 
         }
         .custom-scrollbar::-webkit-scrollbar { width: 8px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1b3c0; border-radius: 4px; border: 2px solid white; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1b3c0; border-radius: 4px; border: 2px solid #f8fafc; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #97164f; }
         
         .no-wrap-value {
@@ -37,7 +38,7 @@
 </head>
 <body class="flex items-start justify-center min-h-screen text-gray-800">
 
-    <div id="app" class="bg-white w-full px-4 py-6 md:px-10 md:py-8 lg:px-16 lg:py-10 fade-in flex flex-col relative custom-scrollbar overflow-y-auto">
+    <div id="app" class="w-full px-4 py-6 md:px-10 md:py-8 lg:px-16 lg:py-10 fade-in flex flex-col relative custom-scrollbar overflow-y-auto">
         <!-- Conteúdo será injetado aqui -->
     </div>
 
@@ -47,7 +48,7 @@
                 title: "Atividade 1: A Tríade Financeira",
                 roleplay: "Você é um <strong>Analista de Crédito Sênior</strong> de um grande banco comercial. O CFO da Completinha S.A. acaba de solicitar a renovação de uma linha de crédito rotativo de curtíssimo prazo no valor de R$ 150.000. Ele entrega as demonstrações de 2027 e argumenta: <em>'Nosso Lucro Líquido de R$ 200.000 demonstra forte pujança. Além disso, com a adoção do CPC 51, nosso Lucro Operacional de R$ 190.000 ficou livre de ruídos de investimento, garantindo plena capacidade de honrar esse compromisso imediato.'</em>",
                 panel: `
-                    <div class="border border-gray-200 rounded-xl overflow-hidden mb-8 shadow-sm text-base">
+                    <div class="bg-white border border-gray-200 rounded-xl overflow-hidden mb-8 shadow-sm text-base">
                         <div class="bg-[#97164f] text-white p-3 font-bold text-center tracking-wide">[DEMONSTRAÇÃO DO RESULTADO — CPC 51]</div>
                         <table class="w-full text-left border-collapse table-fixed">
                             <tbody>
@@ -131,7 +132,7 @@
                 title: "Atividade 2: Dinâmica Patrimonial e Riqueza",
                 roleplay: "Você é o gestor de um <strong>Fundo de Ações</strong> focado em empresas que remuneram bem seus acionistas. Ao avaliar a política de alocação de capital da Completinha S.A., você nota que a empresa reportou um Lucro Líquido de R$ 200.000. Durante a Assembleia Geral, um grupo de acionistas minoritários acusa a diretoria de não compartilhar a riqueza gerada, pois o pagamento de dividendos foi 'baixo'. Você abre a DMPL e a DVA para investigar o fato.",
                 panel: `
-                    <div class="border border-[#97164f] rounded-xl overflow-hidden mb-8 shadow-sm text-base">
+                    <div class="bg-white border border-[#97164f] rounded-xl overflow-hidden mb-8 shadow-sm text-base">
                         <div class="bg-[#fdf2f4] text-[#97164f] p-3 font-bold text-center tracking-wide border-b border-[#97164f]">[MUTAÇÕES DO PL E DISTRIBUIÇÃO DA DVA]</div>
                         <table class="w-full text-left border-collapse table-fixed">
                             <tbody>
@@ -187,7 +188,7 @@
                             <h3 class="text-[#97164f] font-bold text-sm uppercase mb-3 tracking-wide">Relatório da Administração (MD&A)</h3>
                             <p class="text-base text-gray-700 italic">"O exercício de 2027 consagrou o sucesso absoluto da nossa disciplina de custos e excelência operacional, gerando um Lucro Líquido histórico de R$ 200 milhões, salto de 40% no PL e expansão sem precedentes de nossas margens de eficiência comercial."</p>
                         </div>
-                        <div class="bg-[#fdf2f4] border-l-4 border-gray-400 p-5 rounded-r-xl shadow-sm">
+                        <div class="bg-white border-l-4 border-gray-400 p-5 rounded-r-xl shadow-sm border border-gray-100">
                             <h3 class="text-gray-800 font-bold text-sm uppercase mb-3 tracking-wide">Notas Explicativas (CPC 26 / OCPC 07)</h3>
                             <ul class="text-base text-gray-700 space-y-3 list-disc pl-5">
                                 <li><strong>Nota 12 (Op. Descontinuadas):</strong> R$ 55 mil do lucro (27,5% do total) decorrem de ganho de capital na venda emergencial de um parque fabril desativado.</li>
@@ -225,12 +226,9 @@
 
         const app = document.getElementById('app');
 
-        // --- SISTEMA DE NAVEGAÇÃO E HISTORY API ---
+        // --- HISTORY API ---
         function navigate(state, push = true) {
-            if (push) {
-                history.pushState(state, "", "");
-            }
-            
+            if (push) { history.pushState(state, "", ""); }
             if (state.view === 'home') _renderHome();
             else if (state.view === 'placeholder') _renderPlaceholder(state.title);
             else if (state.view === 'menu') _renderSeminarioMenu();
@@ -239,32 +237,27 @@
         }
 
         window.addEventListener('popstate', (e) => {
-            if (e.state) {
-                navigate(e.state, false);
-            } else {
-                navigate({ view: 'home' }, false);
-            }
+            if (e.state) { navigate(e.state, false); } 
+            else { navigate({ view: 'home' }, false); }
         });
 
-        // Funções que disparam a navegação
         function renderHome() { navigate({ view: 'home' }); }
         function renderPlaceholder(title) { navigate({ view: 'placeholder', title: title }); }
         function renderSeminarioMenu() { navigate({ view: 'menu' }); }
         function renderActivity(index) { navigate({ view: 'activity', index: index }); }
         function handleAnswer(activityIndex, selectedOptionIndex) { navigate({ view: 'feedback', actIndex: activityIndex, optIndex: selectedOptionIndex }); }
 
-        // --- RENDERIZADORES DE TELA (Uso Interno) ---
         function _renderHome() {
             app.innerHTML = `
                 <div class="flex flex-col items-center justify-center text-center fade-in py-10 lg:py-20 w-full max-w-4xl mx-auto my-auto">
-                    <div class="w-24 h-24 bg-[#fdf2f4] text-[#97164f] border-2 border-[#97164f] rounded-2xl flex items-center justify-center mb-8 shadow-sm transform rotate-3">
+                    <div class="w-24 h-24 bg-white text-[#97164f] border-2 border-[#97164f] rounded-2xl flex items-center justify-center mb-8 shadow-sm transform rotate-3">
                         <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                     </div>
                     <h1 class="text-4xl md:text-5xl font-black text-gray-800 mb-4 tracking-tight">Completinha S.A.</h1>
                     <p class="text-gray-500 mb-12 text-lg font-medium">Plataforma de Casos Práticos e Simulações Societárias</p>
                     
                     <div class="w-full max-w-lg mx-auto space-y-6">
-                        <button onclick="renderSeminarioMenu()" class="w-full bg-[#97164f] hover:bg-[#7a123f] text-white font-bold text-xl py-6 px-8 rounded-2xl transition duration-200 shadow-lg flex justify-between items-center group">
+                        <button onclick="renderSeminarioMenu()" class="w-full bg-[#97164f] hover:bg-[#7a123f] text-white font-bold text-xl py-6 px-8 rounded-2xl transition duration-200 shadow-md flex justify-between items-center group">
                             <span>Atividades do Seminário</span>
                             <svg class="w-7 h-7 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </button>
@@ -287,7 +280,7 @@
         function _renderPlaceholder(title) {
             app.innerHTML = `
                 <div class="flex flex-col items-center justify-center text-center fade-in py-16 w-full max-w-4xl mx-auto my-auto">
-                    <div class="w-24 h-24 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center mb-8">
+                    <div class="w-24 h-24 bg-white border border-gray-200 text-gray-400 rounded-full flex items-center justify-center mb-8 shadow-sm">
                         <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
                     <h2 class="text-4xl font-bold text-gray-800 mb-4">${title}</h2>
@@ -304,7 +297,7 @@
             app.innerHTML = `
                 <div class="fade-in flex flex-col w-full max-w-4xl mx-auto py-6 md:py-10">
                     <div class="flex items-center mb-12 border-b border-gray-200 pb-6">
-                        <button onclick="renderHome()" class="text-gray-400 hover:text-[#97164f] mr-6 transition bg-gray-50 hover:bg-[#fdf2f4] p-3 rounded-xl">
+                        <button onclick="renderHome()" class="text-gray-500 hover:text-[#97164f] mr-6 transition bg-white border border-gray-200 hover:border-[#97164f] p-3 rounded-xl shadow-sm">
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                         </button>
                         <div>
@@ -314,7 +307,7 @@
                     </div>
                     
                     <div class="space-y-6">
-                        <button onclick="renderActivity(0)" class="w-full text-left bg-white border-2 border-gray-200 hover:border-[#97164f] p-8 rounded-2xl transition duration-200 shadow-sm hover:shadow-md group">
+                        <button onclick="renderActivity(0)" class="w-full text-left bg-white border border-gray-200 hover:border-[#97164f] p-8 rounded-2xl transition duration-200 shadow-sm hover:shadow-md group">
                             <div class="flex items-center justify-between mb-3">
                                 <div class="text-sm font-bold text-[#97164f] tracking-widest uppercase bg-[#fdf2f4] px-4 py-1.5 rounded-lg">Atividade 1</div>
                                 <svg class="w-6 h-6 text-gray-300 group-hover:text-[#97164f] transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
@@ -322,7 +315,7 @@
                             <div class="text-2xl font-bold text-gray-800 group-hover:text-[#97164f] transition">Balanço Patrimonial, DRE e DFC</div>
                         </button>
                         
-                        <button onclick="renderActivity(1)" class="w-full text-left bg-white border-2 border-gray-200 hover:border-[#97164f] p-8 rounded-2xl transition duration-200 shadow-sm hover:shadow-md group">
+                        <button onclick="renderActivity(1)" class="w-full text-left bg-white border border-gray-200 hover:border-[#97164f] p-8 rounded-2xl transition duration-200 shadow-sm hover:shadow-md group">
                             <div class="flex items-center justify-between mb-3">
                                 <div class="text-sm font-bold text-[#97164f] tracking-widest uppercase bg-[#fdf2f4] px-4 py-1.5 rounded-lg">Atividade 2</div>
                                 <svg class="w-6 h-6 text-gray-300 group-hover:text-[#97164f] transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
@@ -330,7 +323,7 @@
                             <div class="text-2xl font-bold text-gray-800 group-hover:text-[#97164f] transition">DMPL e Demonstração do Valor Adicionado (DVA)</div>
                         </button>
                         
-                        <button onclick="renderActivity(2)" class="w-full text-left bg-white border-2 border-gray-200 hover:border-[#97164f] p-8 rounded-2xl transition duration-200 shadow-sm hover:shadow-md group">
+                        <button onclick="renderActivity(2)" class="w-full text-left bg-white border border-gray-200 hover:border-[#97164f] p-8 rounded-2xl transition duration-200 shadow-sm hover:shadow-md group">
                             <div class="flex items-center justify-between mb-3">
                                 <div class="text-sm font-bold text-[#97164f] tracking-widest uppercase bg-[#fdf2f4] px-4 py-1.5 rounded-lg">Atividade 3</div>
                                 <svg class="w-6 h-6 text-gray-300 group-hover:text-[#97164f] transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
@@ -349,7 +342,7 @@
             
             act.options.forEach((opt, optIndex) => {
                 optionsHtml += `
-                    <button onclick="handleAnswer(${index}, ${optIndex})" class="w-full text-left p-6 mb-6 bg-white border-2 border-gray-200 rounded-xl hover:bg-[#fdf2f4] active:bg-gray-100 hover:border-[#97164f] transition duration-200 text-base md:text-lg font-medium text-gray-800 leading-relaxed shadow-sm">
+                    <button onclick="handleAnswer(${index}, ${optIndex})" class="w-full text-left p-6 mb-6 bg-white border border-gray-200 rounded-xl hover:bg-[#fdf2f4] active:bg-gray-100 hover:border-[#97164f] transition duration-200 text-base md:text-lg font-medium text-gray-800 leading-relaxed shadow-sm">
                         ${opt}
                     </button>
                 `;
@@ -359,15 +352,15 @@
                 <div class="fade-in flex flex-col w-full h-full max-w-7xl mx-auto">
                     
                     <div class="flex items-center justify-between mb-8 border-b border-gray-200 pb-4">
-                        <button onclick="renderSeminarioMenu()" class="text-gray-500 hover:text-[#97164f] flex items-center text-base font-bold transition bg-gray-50 hover:bg-[#fdf2f4] px-5 py-2.5 rounded-xl">
+                        <button onclick="renderSeminarioMenu()" class="text-gray-500 hover:text-[#97164f] flex items-center text-base font-bold transition bg-white border border-gray-200 hover:border-[#97164f] px-5 py-2.5 rounded-xl shadow-sm">
                             <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Voltar
                         </button>
-                        <span class="text-sm font-bold text-[#97164f] bg-[#fdf2f4] px-5 py-2.5 rounded-xl border border-[#d1b3c0] uppercase tracking-wider">${act.title.split(':')[0]}</span>
+                        <span class="text-sm font-bold text-[#97164f] bg-white px-5 py-2.5 rounded-xl border border-[#d1b3c0] uppercase tracking-wider shadow-sm">${act.title.split(':')[0]}</span>
                     </div>
                     
                     <div class="flex flex-col lg:flex-row gap-10 lg:gap-14 pb-10">
                         <div class="w-full lg:w-[45%]">
-                            <div class="bg-[#fdf2f4] border-l-4 border-[#97164f] p-6 rounded-r-2xl mb-8 shadow-sm">
+                            <div class="bg-white border-l-4 border-[#97164f] border-y border-r border-gray-200 p-6 rounded-r-2xl mb-8 shadow-sm">
                                 <h3 class="text-[#97164f] font-black text-sm uppercase mb-3 flex items-center tracking-wide">
                                     <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                                     Cenário (Seu Papel)
@@ -421,7 +414,7 @@
                     <div class="flex-1 mt-4">
                         ${icon}
                         <h2 class="text-4xl md:text-5xl font-black ${headerColor} mb-10 tracking-tight">${title}</h2>
-                        <div class="bg-gray-50 p-8 md:p-10 rounded-3xl border border-gray-200 text-left shadow-inner">
+                        <div class="bg-white p-8 md:p-10 rounded-3xl border border-gray-200 text-left shadow-md">
                             <p class="text-lg md:text-xl text-gray-800 leading-relaxed">
                                 <span class="font-black ${headerColor} block mb-4 uppercase tracking-widest text-sm border-b border-gray-200 pb-2">Análise Técnica</span> 
                                 ${feedbackText}
@@ -442,7 +435,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Define o estado inicial da página no histórico
         history.replaceState({ view: 'home' }, "", "");
         _renderHome();
     </script>
