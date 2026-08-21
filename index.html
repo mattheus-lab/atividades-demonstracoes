@@ -14,7 +14,7 @@
         }
         body { 
             font-family: system-ui, -apple-system, sans-serif; 
-            background-color: #ffffff; /* Fundo principal agora é branco para maximizar o espaço */
+            background-color: #ffffff; 
             -webkit-tap-highlight-color: transparent; 
         }
         .custom-scrollbar::-webkit-scrollbar { width: 8px; }
@@ -27,7 +27,6 @@
             display: inline-block;
         }
 
-        /* O container agora ocupa a tela toda */
         #app {
             min-height: 100vh;
             border-radius: 0;
@@ -38,7 +37,6 @@
 </head>
 <body class="flex items-start justify-center min-h-screen text-gray-800">
 
-    <!-- Container expandido ocupando toda a largura e altura da tela -->
     <div id="app" class="bg-white w-full px-4 py-6 md:px-10 md:py-8 lg:px-16 lg:py-10 fade-in flex flex-col relative custom-scrollbar overflow-y-auto">
         <!-- Conteúdo será injetado aqui -->
     </div>
@@ -227,9 +225,38 @@
 
         const app = document.getElementById('app');
 
-        function renderHome() {
+        // --- SISTEMA DE NAVEGAÇÃO E HISTORY API ---
+        function navigate(state, push = true) {
+            if (push) {
+                history.pushState(state, "", "");
+            }
+            
+            if (state.view === 'home') _renderHome();
+            else if (state.view === 'placeholder') _renderPlaceholder(state.title);
+            else if (state.view === 'menu') _renderSeminarioMenu();
+            else if (state.view === 'activity') _renderActivity(state.index);
+            else if (state.view === 'feedback') _handleAnswer(state.actIndex, state.optIndex);
+        }
+
+        window.addEventListener('popstate', (e) => {
+            if (e.state) {
+                navigate(e.state, false);
+            } else {
+                navigate({ view: 'home' }, false);
+            }
+        });
+
+        // Funções que disparam a navegação
+        function renderHome() { navigate({ view: 'home' }); }
+        function renderPlaceholder(title) { navigate({ view: 'placeholder', title: title }); }
+        function renderSeminarioMenu() { navigate({ view: 'menu' }); }
+        function renderActivity(index) { navigate({ view: 'activity', index: index }); }
+        function handleAnswer(activityIndex, selectedOptionIndex) { navigate({ view: 'feedback', actIndex: activityIndex, optIndex: selectedOptionIndex }); }
+
+        // --- RENDERIZADORES DE TELA (Uso Interno) ---
+        function _renderHome() {
             app.innerHTML = `
-                <div class="flex flex-col items-center justify-center text-center fade-in py-10 lg:py-20 w-full max-w-4xl mx-auto">
+                <div class="flex flex-col items-center justify-center text-center fade-in py-10 lg:py-20 w-full max-w-4xl mx-auto my-auto">
                     <div class="w-24 h-24 bg-[#fdf2f4] text-[#97164f] border-2 border-[#97164f] rounded-2xl flex items-center justify-center mb-8 shadow-sm transform rotate-3">
                         <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                     </div>
@@ -254,11 +281,12 @@
                     </div>
                 </div>
             `;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function renderPlaceholder(title) {
+        function _renderPlaceholder(title) {
             app.innerHTML = `
-                <div class="flex flex-col items-center justify-center text-center fade-in py-16 w-full max-w-4xl mx-auto">
+                <div class="flex flex-col items-center justify-center text-center fade-in py-16 w-full max-w-4xl mx-auto my-auto">
                     <div class="w-24 h-24 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center mb-8">
                         <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
@@ -269,9 +297,10 @@
                     </button>
                 </div>
             `;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function renderSeminarioMenu() {
+        function _renderSeminarioMenu() {
             app.innerHTML = `
                 <div class="fade-in flex flex-col w-full max-w-4xl mx-auto py-6 md:py-10">
                     <div class="flex items-center mb-12 border-b border-gray-200 pb-6">
@@ -311,9 +340,10 @@
                     </div>
                 </div>
             `;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function renderActivity(index) {
+        function _renderActivity(index) {
             const act = activities[index];
             let optionsHtml = '';
             
@@ -359,7 +389,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function handleAnswer(activityIndex, selectedOptionIndex) {
+        function _handleAnswer(activityIndex, selectedOptionIndex) {
             const act = activities[activityIndex];
             const isCorrect = selectedOptionIndex === act.correctIndex;
             const feedbackText = act.feedbacks[selectedOptionIndex];
@@ -387,7 +417,7 @@
             }
 
             app.innerHTML = `
-                <div class="fade-in flex flex-col text-center py-10 w-full max-w-4xl mx-auto">
+                <div class="fade-in flex flex-col text-center py-10 w-full max-w-4xl mx-auto my-auto">
                     <div class="flex-1 mt-4">
                         ${icon}
                         <h2 class="text-4xl md:text-5xl font-black ${headerColor} mb-10 tracking-tight">${title}</h2>
@@ -412,7 +442,9 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        renderHome();
+        // Define o estado inicial da página no histórico
+        history.replaceState({ view: 'home' }, "", "");
+        _renderHome();
     </script>
 </body>
 </html>
