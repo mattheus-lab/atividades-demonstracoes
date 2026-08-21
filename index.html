@@ -23,20 +23,12 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1b3c0; border-radius: 4px; border: 2px solid white; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #97164f; }
         
-        /* Força a não quebra de linha nos valores financeiros */
-        .no-wrap-value {
-            white-space: nowrap !important;
-            display: inline-block;
-        }
-
-        /* Ajuste do container principal para remover a rolagem interna no desktop e usar a rolagem natural da página */
+        /* Ajuste do container principal */
         #app {
-            /* Removida a limitação rígida de altura (max-h) para que o card cresça de acordo com o conteúdo no desktop */
             min-height: 80vh;
         }
 
         @media (max-width: 1024px) {
-            /* No celular, mantemos o comportamento de "app" com rolagem interna */
             #app {
                 max-height: 95vh;
                 overflow-y: auto;
@@ -46,7 +38,7 @@
 </head>
 <body class="flex items-start lg:items-center justify-center min-h-screen p-4 md:p-6 text-gray-800">
 
-    <div id="app" class="bg-white rounded-3xl shadow-2xl w-full max-w-[98%] xl:max-w-7xl flex flex-col relative custom-scrollbar border border-gray-100 my-auto">
+    <div id="app" class="bg-white rounded-3xl shadow-2xl w-full max-w-[98%] xl:max-w-7xl flex flex-col relative custom-scrollbar border border-gray-100 my-auto p-6 md:p-10">
         <!-- O conteúdo será injetado pelo JavaScript -->
     </div>
 
@@ -58,61 +50,61 @@
                 panel: `
                     <div class="border border-gray-200 rounded-xl overflow-hidden mb-6 shadow-sm text-sm lg:text-base">
                         <div class="bg-[#97164f] text-white p-3 font-bold text-center tracking-wide">[DEMONSTRAÇÃO DO RESULTADO — CPC 51]</div>
-                        <table class="w-full text-left border-collapse table-fixed">
+                        <table class="w-full text-left border-collapse">
                             <tbody>
                                 <tr class="border-b">
-                                    <td class="p-3 w-2/3 md:w-3/4">1. Categoria Operacional (Lucro Op.)</td>
-                                    <td class="p-3 text-right font-bold text-[#97164f] w-1/3 md:w-1/4"><span class="no-wrap-value">R$ 190.000</span></td>
+                                    <td class="p-3">1. Categoria Operacional (Lucro Op.)</td>
+                                    <td class="p-3 text-right font-bold text-[#97164f] whitespace-nowrap">R$ 190.000</td>
                                 </tr>
                                 <tr class="border-b">
-                                    <td class="p-3 w-2/3 md:w-3/4">2. Categoria de Investimento (MEP)</td>
-                                    <td class="p-3 text-right text-gray-600 w-1/3 md:w-1/4"><span class="no-wrap-value">R$ 60.000</span></td>
+                                    <td class="p-3">2. Categoria de Investimento (MEP)</td>
+                                    <td class="p-3 text-right text-gray-600 whitespace-nowrap">R$ 60.000</td>
                                 </tr>
                                 <tr class="border-b">
-                                    <td class="p-3 w-2/3 md:w-3/4">3. Categoria de Financiamento (Juros)</td>
-                                    <td class="p-3 text-right text-gray-600 w-1/3 md:w-1/4"><span class="no-wrap-value">(R$ 45.000)</span></td>
+                                    <td class="p-3">3. Categoria de Financiamento (Juros)</td>
+                                    <td class="p-3 text-right text-gray-600 whitespace-nowrap">(R$ 45.000)</td>
                                 </tr>
                                 <tr class="border-b">
-                                    <td class="p-3 w-2/3 md:w-3/4">4. Categoria de Tributos sobre o Lucro</td>
-                                    <td class="p-3 text-right text-gray-600 w-1/3 md:w-1/4"><span class="no-wrap-value">(R$ 60.000)</span></td>
+                                    <td class="p-3">4. Categoria de Tributos sobre o Lucro</td>
+                                    <td class="p-3 text-right text-gray-600 whitespace-nowrap">(R$ 60.000)</td>
                                 </tr>
                                 <tr class="border-b">
-                                    <td class="p-3 w-2/3 md:w-3/4">5. Categoria de Op. Descontinuadas</td>
-                                    <td class="p-3 text-right text-gray-600 w-1/3 md:w-1/4"><span class="no-wrap-value">R$ 55.000</span></td>
+                                    <td class="p-3">5. Categoria de Op. Descontinuadas</td>
+                                    <td class="p-3 text-right text-gray-600 whitespace-nowrap">R$ 55.000</td>
                                 </tr>
                                 <tr class="bg-[#fdf2f4] font-bold">
-                                    <td class="p-3 w-2/3 md:w-3/4">(=) LUCRO LÍQUIDO DO PERÍODO</td>
-                                    <td class="p-3 text-right text-[#97164f] w-1/3 md:w-1/4"><span class="no-wrap-value">R$ 200.000</span></td>
+                                    <td class="p-3">(=) LUCRO LÍQUIDO DO PERÍODO</td>
+                                    <td class="p-3 text-right text-[#97164f] whitespace-nowrap">R$ 200.000</td>
                                 </tr>
                             </tbody>
                         </table>
                         
                         <div class="bg-gray-100 text-gray-800 p-3 font-bold text-center border-t border-b border-gray-200 tracking-wide">[DFC (MÉTODO INDIRETO)]</div>
-                        <table class="w-full text-left border-collapse table-fixed">
+                        <table class="w-full text-left border-collapse">
                             <tbody>
                                 <tr class="border-b">
-                                    <td class="p-3 w-2/3 md:w-3/4">Lucro Líquido do Período</td>
-                                    <td class="p-3 text-right w-1/3 md:w-1/4"><span class="no-wrap-value">R$ 200.000</span></td>
+                                    <td class="p-3">Lucro Líquido do Período</td>
+                                    <td class="p-3 text-right whitespace-nowrap">R$ 200.000</td>
                                 </tr>
                                 <tr class="border-b">
-                                    <td class="p-3 w-2/3 md:w-3/4">(+) Depreciação e Amortização</td>
-                                    <td class="p-3 text-right w-1/3 md:w-1/4"><span class="no-wrap-value">R$ 50.000</span></td>
+                                    <td class="p-3">(+) Depreciação e Amortização</td>
+                                    <td class="p-3 text-right whitespace-nowrap">R$ 50.000</td>
                                 </tr>
                                 <tr class="border-b">
-                                    <td class="p-3 w-2/3 md:w-3/4">(-) Itens Não-Caixa (MEP e Op. Desc.)</td>
-                                    <td class="p-3 text-right text-red-600 w-1/3 md:w-1/4"><span class="no-wrap-value">(R$ 110.000)</span></td>
+                                    <td class="p-3">(-) Itens Não-Caixa (MEP e Op. Desc.)</td>
+                                    <td class="p-3 text-right text-red-600 whitespace-nowrap">(R$ 110.000)</td>
                                 </tr>
                                 <tr class="border-b">
-                                    <td class="p-3 w-2/3 md:w-3/4">(-) Variação de Contas a Receber</td>
-                                    <td class="p-3 text-right text-red-600 w-1/3 md:w-1/4"><span class="no-wrap-value">(R$ 165.000)</span></td>
+                                    <td class="p-3">(-) Variação de Contas a Receber</td>
+                                    <td class="p-3 text-right text-red-600 whitespace-nowrap">(R$ 165.000)</td>
                                 </tr>
                                 <tr class="border-b">
-                                    <td class="p-3 w-2/3 md:w-3/4">(-) Variação de Fornecedores</td>
-                                    <td class="p-3 text-right text-red-600 w-1/3 md:w-1/4"><span class="no-wrap-value">(R$ 75.000)</span></td>
+                                    <td class="p-3">(-) Variação de Fornecedores</td>
+                                    <td class="p-3 text-right text-red-600 whitespace-nowrap">(R$ 75.000)</td>
                                 </tr>
                                 <tr class="bg-gray-50 font-bold">
-                                    <td class="p-3 w-2/3 md:w-3/4">(=) Caixa Líq. das Operações (FCO)</td>
-                                    <td class="p-3 text-right text-red-600 w-1/3 md:w-1/4"><span class="no-wrap-value">(R$ 100.000)</span></td>
+                                    <td class="p-3">(=) Caixa Líq. das Operações (FCO)</td>
+                                    <td class="p-3 text-right text-red-600 whitespace-nowrap">(R$ 100.000)</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -142,31 +134,31 @@
                 panel: `
                     <div class="border border-[#97164f] rounded-xl overflow-hidden mb-6 shadow-sm text-sm lg:text-base">
                         <div class="bg-[#fdf2f4] text-[#97164f] p-3 font-bold text-center tracking-wide border-b border-[#97164f]">[MUTAÇÕES DO PL E DISTRIBUIÇÃO DA DVA]</div>
-                        <table class="w-full text-left border-collapse table-fixed">
+                        <table class="w-full text-left border-collapse">
                             <tbody>
                                 <tr class="border-b">
-                                    <td class="p-3 w-2/3 md:w-3/4">Lucro Líquido do Período 2027</td>
-                                    <td class="p-3 text-right font-bold w-1/3 md:w-1/4"><span class="no-wrap-value">R$ 200.000</span></td>
+                                    <td class="p-3">Lucro Líquido do Período 2027</td>
+                                    <td class="p-3 text-right font-bold whitespace-nowrap">R$ 200.000</td>
                                 </tr>
                                 <tr class="border-b">
-                                    <td class="p-3 w-2/3 md:w-3/4">Retenção para Reserva de Expansão</td>
-                                    <td class="p-3 text-right text-gray-600 w-1/3 md:w-1/4"><span class="no-wrap-value">R$ 140.000</span></td>
+                                    <td class="p-3">Retenção para Reserva de Expansão</td>
+                                    <td class="p-3 text-right text-gray-600 whitespace-nowrap">R$ 140.000</td>
                                 </tr>
                                 <tr class="border-b">
-                                    <td class="p-3 w-2/3 md:w-3/4">Retenção para Reserva Legal</td>
-                                    <td class="p-3 text-right text-gray-600 w-1/3 md:w-1/4"><span class="no-wrap-value">R$ 10.000</span></td>
+                                    <td class="p-3">Retenção para Reserva Legal</td>
+                                    <td class="p-3 text-right text-gray-600 whitespace-nowrap">R$ 10.000</td>
                                 </tr>
                                 <tr class="border-b">
-                                    <td class="p-3 font-semibold text-[#97164f] w-2/3 md:w-3/4">Distribuição de Dividendos Propostos</td>
-                                    <td class="p-3 text-right font-bold text-[#97164f] w-1/3 md:w-1/4"><span class="no-wrap-value">R$ 50.000</span></td>
+                                    <td class="p-3 font-semibold text-[#97164f]">Distribuição de Dividendos Propostos</td>
+                                    <td class="p-3 text-right font-bold text-[#97164f] whitespace-nowrap">R$ 50.000</td>
                                 </tr>
                                 <tr class="border-b">
-                                    <td class="p-3 w-2/3 md:w-3/4">Outros Resultados Abrangentes (ORA)</td>
-                                    <td class="p-3 text-right text-gray-600 w-1/3 md:w-1/4"><span class="no-wrap-value">R$ 15.000</span></td>
+                                    <td class="p-3">Outros Resultados Abrangentes (ORA)</td>
+                                    <td class="p-3 text-right text-gray-600 whitespace-nowrap">R$ 15.000</td>
                                 </tr>
                                 <tr class="bg-[#97164f] text-white font-bold">
-                                    <td class="p-3 w-2/3 md:w-3/4">Remuneração de Capitais Próprios (DVA)</td>
-                                    <td class="p-3 text-right w-1/3 md:w-1/4"><span class="no-wrap-value">R$ 200.000</span></td>
+                                    <td class="p-3">Remuneração de Capitais Próprios (DVA)</td>
+                                    <td class="p-3 text-right whitespace-nowrap">R$ 200.000</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -192,7 +184,7 @@
                 roleplay: "Você é um <strong>Analista Sênior de M&A e Governança</strong>. Foi contratado para realizar a due diligence investigativa da Completinha S.A. visando uma aquisição. Para entender os riscos reais do negócio, você confronta a narrativa persuasiva apresentada pela diretoria no Relatório da Administração (MD&A) com as frias evidências contidas nas Notas Explicativas.",
                 panel: `
                     <div class="flex flex-col gap-4 mb-6">
-                        <div class="bg-white border-l-4 border-[#97164f] p-4 rounded-r-xl shadow-sm border-t border-r border-b border-gray-100">
+                        <div class="bg-white border-l-4 border-[#97164f] p-4 rounded-r-xl shadow-sm border border-gray-100">
                             <h3 class="text-[#97164f] font-bold text-xs lg:text-sm uppercase mb-2 tracking-wide">Relatório da Administração (MD&A)</h3>
                             <p class="text-sm lg:text-base text-gray-700 italic">"O exercício de 2027 consagrou o sucesso absoluto da nossa disciplina de custos e excelência operacional, gerando um Lucro Líquido histórico de R$ 200 milhões, salto de 40% no PL e expansão sem precedentes de nossas margens de eficiência comercial."</p>
                         </div>
@@ -280,7 +272,7 @@
 
         function renderSeminarioMenu() {
             app.innerHTML = `
-                <div class="fade-in flex flex-col h-full w-full max-w-3xl mx-auto py-6 md:py-8">
+                <div class="fade-in flex flex-col h-full w-full max-w-3xl mx-auto py-4 md:py-8">
                     <div class="flex items-center mb-10 border-b border-gray-100 pb-6">
                         <button onclick="renderHome()" class="text-gray-400 hover:text-[#97164f] mr-5 transition bg-gray-50 hover:bg-[#fdf2f4] p-3 rounded-full">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
@@ -332,17 +324,15 @@
                 `;
             });
 
+            // Estrutura normal, sem margens negativas esquisitas nem position sticky
             app.innerHTML = `
                 <div class="fade-in flex flex-col h-full w-full">
                     
-                    <!-- Cabeçalho redesenhado para não vazar texto no celular e ficar limpo no desktop -->
-                    <div class="bg-white w-full border-b border-gray-100 pb-4 mb-6 lg:mb-8 sticky top-0 z-20" style="margin-top: -1rem; padding-top: 1rem;">
-                        <div class="flex items-center justify-between">
-                            <button onclick="renderSeminarioMenu()" class="text-gray-500 hover:text-[#97164f] flex items-center text-sm md:text-base font-bold transition bg-gray-50 hover:bg-[#fdf2f4] px-4 py-2 rounded-lg">
-                                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Voltar
-                            </button>
-                            <span class="text-xs md:text-sm font-bold text-[#97164f] bg-[#fdf2f4] px-4 py-2 rounded-lg border border-[#d1b3c0] uppercase tracking-wider">${act.title.split(':')[0]}</span>
-                        </div>
+                    <div class="flex items-center justify-between mb-8 border-b border-gray-100 pb-4">
+                        <button onclick="renderSeminarioMenu()" class="text-gray-500 hover:text-[#97164f] flex items-center text-sm md:text-base font-bold transition bg-gray-50 hover:bg-[#fdf2f4] px-4 py-2 rounded-lg">
+                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Voltar
+                        </button>
+                        <span class="text-xs md:text-sm font-bold text-[#97164f] bg-[#fdf2f4] px-4 py-2 rounded-lg border border-[#d1b3c0] uppercase tracking-wider">${act.title.split(':')[0]}</span>
                     </div>
                     
                     <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 pb-8">
@@ -366,7 +356,6 @@
                     </div>
                 </div>
             `;
-            // Volta para o topo da div 'app' e não da janela inteira
             app.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
