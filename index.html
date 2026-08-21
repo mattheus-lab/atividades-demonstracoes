@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Completinha S.A. - Desafio Interativo</title>
+    <title>Desafios Interativos</title>
     <!-- Importando a Fonte Premium Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,15 +65,15 @@
 
         const activities = [
             {
-                title: "Atividade 1: A Tríade Financeira",
-                roleplay: "Você é um <strong>Analista de Crédito Sênior</strong> de um grande banco comercial. O CFO da Completinha S.A. acaba de solicitar a renovação de uma linha de crédito rotativo de curtíssimo prazo no valor de R$ 150.000. Ele entrega as demonstrações de 2027 e argumenta: <em>'Nosso Lucro Líquido de R$ 200.000 demonstra forte pujança. Além disso, com a adoção do <span class=\"tooltip-group relative inline-block border-b-2 border-dotted border-[#97164f] cursor-help font-bold text-[#97164f]\">CPC 51<span class=\"tooltip-text absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-50 text-center font-normal tracking-wide whitespace-normal\">Novo normativo alinhado ao IFRS 18 focado na apresentação estruturada das demonstrações.</span></span>, nosso Lucro Operacional de R$ 190.000 ficou livre de ruídos de investimento, garantindo plena capacidade de honrar esse compromisso imediato.'</em>",
+                title: "Atividade 1: Balanço Patrimonial, DR e DFC",
+                roleplay: "Você é um <strong>Analista de Crédito Sênior</strong> de um grande banco comercial. O CFO da Completinha S.A. acaba de solicitar a renovação de uma linha de crédito rotativo de curtíssimo prazo no valor de R$ 150.000. Ele entrega as demonstrações de 2027 e argumenta: <em>'Nosso Lucro Líquido de R$ 200.000 demonstra força. Além disso, com a adoção do <span class=\"tooltip-group relative inline-block border-b-2 border-dotted border-[#97164f] cursor-help font-bold text-[#97164f]\">CPC 51<span class=\"tooltip-text absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-50 text-center font-normal tracking-wide whitespace-normal\">Novo normativo alinhado ao IFRS 18 focado na apresentação estruturada das demonstrações.</span></span>, nosso Lucro Operacional de R$ 190.000 ficou livre de ruídos de investimento e financiamento, garantindo plena capacidade de honrar compromissos de crédito.'</em>",
                 panel: `
                     <div class="bg-white border border-gray-200 rounded-xl overflow-hidden mb-8 shadow-sm">
                         <div class="bg-[#97164f] text-white px-3 py-4 font-bold text-center tracking-wide text-base md:text-lg">[DEMONSTRAÇÃO DO RESULTADO — CPC 51]</div>
                         <table class="w-full text-left border-collapse">
                             <tbody>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
-                                    <td class="px-4 py-3 md:p-4 text-base md:text-lg">1. Categoria Operacional (Lucro Op.)</td>
+                                    <td class="px-4 py-3 md:p-4 text-base md:text-lg">1. Categoria Operacional (Lucro Operacional)</td>
                                     <td class="px-4 py-3 md:p-4 text-right font-bold w-[1%] whitespace-nowrap tabular-nums text-base md:text-lg"><span class="text-[#97164f]">R$ 190.000<span class="invisible">)</span></span></td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
@@ -132,28 +132,28 @@
                         <div class="p-4 md:p-6 bg-white flex flex-col sm:flex-row justify-center sm:justify-around items-center gap-3 sm:gap-6 border-t border-gray-200">
                             <div class="text-lg md:text-xl font-bold text-gray-700">Caixa Final: <span class="text-emerald-600">R$ 50.000</span></div>
                             <div class="hidden sm:block text-gray-300">|</div>
-                            <div class="text-lg md:text-xl font-bold text-gray-700">Passivo Imediato: <span class="text-[#97164f]">R$ 380.000</span></div>
+                            <div class="text-lg md:text-xl font-bold text-gray-700">Passivo Próx. 90 dias: <span class="text-[#97164f]">R$ 380.000</span></div>
                         </div>
                     </div>
                 `,
-                question: "Ao confrontar o desempenho econômico reportado na DRE com a dinâmica financeira na DFC e os saldos de liquidez, qual diagnóstico deve fundamentar a sua decisão?",
+                question: "Ao confrontar o desempenho econômico reportado na DR com a dinâmica do fluxo operacional na DFC e as informações dos saldos de caixa final juntamente com o passívo exígivel urgente, qual diagnóstico deve fundamentar a sua decisão?",
                 options: [
                     "A) O crédito deve ser deferido, visto que a empresa apresenta forte lucratividade (R$ 200.000) e o descasamento no fluxo operacional é neutralizado pela Depreciação (R$ 50.000), que atua na prática contábil como uma retenção de fundos que protege o caixa da empresa no curtíssimo prazo.",
-                    "B) O crédito deve ser negado ou fortemente condicionado. Apesar do lucro contábil robusto, a DFC revela severa queima de caixa operacional (-R$ 100.000) devido ao represamento de recursos em clientes; além disso, ganhos econômicos como o MEP não geram liquidez imediata, deixando a empresa com apenas R$ 50.000 em caixa para cobrir R$ 380.000 de exigibilidades.",
-                    "C) A concessão é justificada se desconsiderarmos a distorção do CPC 51. Ao realocar os juros bancários para a Categoria de Financiamento na DRE, a norma proíbe a empresa de reportá-los no FCO da DFC, forçando um caixa operacional aparentemente negativo que mascara a real capacidade do giro da empresa.",
-                    "D) A proposta deve ser aprovada. O déficit no fluxo de caixa operacional (-R$ 100.000) é uma anomalia do Método Indireto que deduz o aumento de Contas a Receber. Sob a ótica do risco de crédito bancário de curto prazo, o expressivo contas a receber atua como substituto perfeito de disponibilidades, mitigando o risco de liquidez."
+                    "B) O crédito deve ser negado ou fortemente condicionado. Apesar do lucro contábil robusto, a DFC revela severa queima de caixa operacional (R$ 100.000) devido ao 'represamento' de recursos em clientes; além disso, ganhos econômicos como o MEP não geram liquidez imediata, deixando a empresa com apenas R$ 50.000 em caixa para cobrir R$ 380.000 de exigibilidades próximas.",
+                    "C) A concessão é justificada se desconsiderarmos a distorção do CPC 51. Ao realocar os juros bancários para a Categoria de Financiamento na DR, a norma na prática proíbe a empresa de reportá-los no FCO da DFC, forçando um caixa operacional aparentemente negativo que mascara a real capacidade do giro da empresa.",
+                    "D) A proposta deve ser aprovada. O déficit no fluxo de caixa operacional (R$ 100.000) é uma anomalia do Método Indireto que deduz o aumento de Contas a Receber. Sob a ótica do risco de crédito bancário de curto prazo, o expressivo contas a receber atua como substituto perfeito de disponibilidades, mitigando o risco de liquidez."
                 ],
                 correctIndex: 1,
                 feedbacks: [
-                    "Incorreto. Este é um mito contábil clássico: a depreciação NÃO é uma reserva financeira e não acumula dinheiro. Ela é somada no Método Indireto da DFC apenas para anular o efeito redutor que teve na DRE (já que não representou saída de caixa no período), mas não cria liquidez alguma para pagar dívidas.",
-                    "Perfeito! Você assumiu o papel do analista que não se ilude com a última linha da DRE. O lucro utiliza o regime de competência, mas o banco é pago com caixa. O MEP e as Operações Descontinuadas representaram 55% do lucro (R$ 110.000), mas não colocaram dinheiro imediato na conta. Com R$ 380 mil vencendo e só R$ 50 mil em caixa, a empresa precisa do empréstimo para sobreviver, e não apenas para girar.",
-                    "Incorreto. Você confundiu o impacto normativo. O CPC 51 afeta a apresentação ao alinhar a DRE e a DFC. No entanto, classificar juros como financiamento <b>aumenta</b> (melhora) o Fluxo de Caixa Operacional, e não o contrário. A queima de caixa neste caso adveio puramente de ineficiência no capital de giro.",
-                    "Incorreto. Contas a Receber possui risco de crédito (inadimplência) e risco de prazo. Para honrar um Passivo Circulante que vence imediatamente, recebíveis que ainda vão demorar a entrar não substituem o Caixa (Disponibilidades). Dinheiro na mão e direito a receber são avaliados de formas drasticamente diferentes no corporate banking."
+                    "Incorreto. Uma confusão já clássica na contabidade: a depreciação NÃO é uma reserva financeira e não acumula dinheiro. Ela é somada no Método Indireto da DFC apenas para anular o efeito redutor que teve na DR (já que não representou saída de caixa no período), mas não cria liquidez alguma para pagar dívidas.",
+                    "Perfeito! Você assumiu o papel do analista que não se ilude com a última linha da DR. O lucro utiliza o regime de competência, mas o banco é pago com caixa. O MEP e as Operações Descontinuadas representaram 55% do lucro (R$ 110.000), mas não colocaram dinheiro imediato na conta. Com R$ 380 mil vencendo e só R$ 50 mil em caixa, a empresa precisa do empréstimo para sobreviver, e não apenas para girar.",
+                    "Incorreto. Você confundiu o impacto normativo. O CPC 51 afeta a apresentação ao alinhar a DR e a DFC. No entanto, classificar juros como financiamento <b>aumenta</b> (melhora) o Fluxo de Caixa Operacional, e não o contrário. A queima de caixa neste caso veio principalmente de ineficiência no capital de giro (Contas a Receber e Fornecedores).",
+                    "Incorreto. Contas a Receber possui risco de crédito (inadimplência) e prazos que podem ser incertos também. Para honrar um Passivo Circulante que vence nos próximos 90 dias, recebíveis que ainda podem demorar a entrar e que não são simultanealmente 'líquidos e certos' não substituem o Caixa (Disponibilidades). Dinheiro 'na mão' e direito a receber são avaliados de formas diferentes."
                 ]
             },
             {
-                title: "Atividade 2: Dinâmica Patrimonial e Riqueza",
-                roleplay: "Você é o gestor de um <strong>Fundo de Ações</strong> focado em empresas que remuneram bem seus acionistas. Ao avaliar a política de alocação de capital da Completinha S.A., você nota que a empresa reportou um Lucro Líquido de R$ 200.000. Durante a Assembleia Geral, um grupo de acionistas minoritários acusa a diretoria de não compartilhar a riqueza gerada, pois o pagamento de dividendos foi 'baixo'. Você abre a DMPL e a DVA para investigar o fato.",
+                title: "Atividade 2: DMPL e DVA",
+                roleplay: "Você é o gestor de um <strong>Fundo de Ações</strong> focado em empresas que remuneram bem seus acionistas, seja por fluxo de caixa transferido ou valor agregado. Ao avaliar a política de alocação de capital da Completinha S.A., você nota que a empresa reportou um Lucro Líquido de R$ 200.000. Durante a Assembleia Geral, um grupo de acionistas minoritários acusa a diretoria de não compartilhar a riqueza gerada, pois o pagamento de dividendos foi 'baixo'. Você abre a DMPL e a DVA para investigar o fato.",
                 panel: `
                     <div class="bg-white border border-[#97164f] rounded-xl overflow-hidden mb-8 shadow-sm">
                         <div class="bg-[#fdf2f4] text-[#97164f] px-3 py-4 font-bold text-center tracking-wide border-b border-[#97164f] text-base md:text-lg">[MUTAÇÕES DO PL E DISTRIBUIÇÃO DA DVA]</div>
@@ -189,24 +189,24 @@
                         </table>
                     </div>
                 `,
-                question: "Cruzando a mecânica de destinação evidenciada na DMPL com os princípios de mensuração do PIB contábil na Demonstração do Valor Adicionado (DVA), qual deve ser o seu veredito técnico na assembleia sobre a remuneração dos acionistas?",
+                question: "Cruzando a mecânica de destinação evidenciada na DMPL com os princípios de mensuração do PIB contábil na Demonstração do Valor Adicionado (DVA), qual deve ser o seu veredito técnico na assembleia sobre a remuneração dos acionistas ?",
                 options: [
-                    "A) A denúncia dos minoritários procede. A distribuição de apenas R$ 50.000 em dividendos comprova que a maior parcela da riqueza adicionada foi transferida ao Estado e aos fornecedores de capital de giro, reduzindo severamente o 'Valor Adicionado Recebido em Transferência' dos sócios.",
+                    "A) A denúncia dos minoritários procede. A distribuição de apenas R$ 50.000 em dividendos comprova de forma absoluta que a maior parcela da riqueza adicionada foi transferida para terceiros, reduzindo severamente o 'Valor Adicionado Recebido em Transferência' dos sócios.",
                     "B) A denúncia é infundada. Contudo, a DVA falha na sua estrutura: a alocação de R$ 140.000 para a Reserva de Expansão, por ser um reinvestimento físico futuro, deveria ser tratada sob o CPC 09 como 'Insumos Adquiridos de Terceiros', e não somada aos R$ 50.000 na linha de capitais próprios.",
                     "C) A denúncia é infundada, pois a constituição da Reserva Legal e da Reserva de Expansão são apenas mutações internas no PL que não reduzem o direito do dono. A DVA reflete isso corretamente, evidenciando que a totalidade do lucro (R$ 200.000) remunera os Capitais Próprios, dividida de forma transparente entre a parcela distribuída e a reinvestida.",
-                    "D) A denúncia procede parcialmente. A constituição da Reserva Legal (R$ 10.000) diminui o 'Valor Adicionado Líquido Produzido' da DVA, uma vez que se trata de uma retenção de caráter imperativo exigida pela Lei das S.A., atuando tecnicamente como um encargo tributário estadual retido na fonte."
+                    "D) A denúncia procede parcialmente. A constituição da Reserva Legal (R$ 10.000) diminui o 'Valor Adicionado Líquido Produzido' da DVA, uma vez que se trata de uma retenção de caráter imperativo exigida pela Lei das S.A., assim atuando na prática como um encargo tributário."
                 ],
                 correctIndex: 2,
                 feedbacks: [
                     "Incorreto. O valor recebido em dividendos (R$ 50.000) não resume a riqueza destinada aos acionistas na DVA. O Lucro Retido (R$ 150.000) também compõe a 'Remuneração de Capitais Próprios', significando que a empresa compartilhou a riqueza mantendo o valor dentro da cota do acionista.",
                     "Incorreto. Este distrator mistura os conceitos da DVA. 'Insumos Adquiridos de Terceiros' referem-se aos bens e serviços usados para gerar a receita. A Reserva de Expansão é a destinação (distribuição) do lucro líquido, e jamais um insumo de terceiros.",
-                    "Na mosca! Gestores de fundo sabem que o acionista ganha de duas formas: dinheiro no bolso (dividendos) ou valorização da cota (lucros retidos e reinvestidos). A retenção de lucros para reservas é apenas uma mudança de nome ('Lucro Acumulado' para 'Reserva'), garantindo que a riqueza gerada continuou dentro do patrimônio da empresa, pertencendo inteiramente ao investidor.",
-                    "Incorreto. A Reserva Legal, mesmo sendo obrigatória por Lei, continua pertencendo integralmente aos acionistas (compondo o Patrimônio Líquido). Ela não é um imposto e jamais deduz o Valor Adicionado Líquido Produzido (o qual só é reduzido pela depreciação e amortização)."
+                    "Na mosca! Gestores de fundo de modo geral sabem que o acionista ganha basicamente de duas formas: dinheiro no bolso (dividendos) ou valorização da cota (lucros retidos e reinvestidos). A retenção de lucros para reservas é apenas uma mudança de nome ('Lucro Acumulado' para 'Reserva'), garantindo que a riqueza gerada continuou dentro do patrimônio da empresa, pertencendo inteiramente ao investidor.",
+                    "Incorreto. A Reserva Legal, mesmo sendo obrigatória por Lei, continua pertencendo integralmente aos acionistas (compondo o Patrimônio Líquido). Ela não é como um tributo e jamais deduz o Valor Adicionado Líquido Produzido (o qual só é reduzido pela depreciação e amortização)."
                 ]
             },
             {
-                title: "Atividade 3: A Dialética do Relato Integrado",
-                roleplay: "Você é um <strong>Analista Sênior de M&A e Governança</strong>. Foi contratado para realizar a due diligence investigativa da Completinha S.A. visando uma aquisição. Para entender os riscos reais do negócio, você confronta a narrativa persuasiva apresentada pela diretoria no <span class=\"tooltip-group relative inline-block border-b border-dotted border-[#97164f] text-[#97164f] font-semibold cursor-help\">MD&A<span class=\"tooltip-text absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-50 text-center font-normal whitespace-normal\">Management Discussion and Analysis (Relatório da Administração)</span></span> com as frias evidências contidas nas Notas Explicativas.",
+                title: "Atividade 3: Ralatório da Administração e Notas Explicativas",
+                roleplay: "Você é um <strong>Analista Sênior de M&A e Governança</strong>. Foi contratado para realizar a due diligence investigativa da Completinha S.A. visando uma aquisição. Para entender os riscos reais do negócio, você confronta a narrativa apresentada pela diretoria no <span class=\"tooltip-group relative inline-block border-b border-dotted border-[#97164f] text-[#97164f] font-semibold cursor-help\">MD&A<span class=\"tooltip-text absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-50 text-center font-normal whitespace-normal\">Management Discussion and Analysis (Relatório da Administração)</span></span> com as frias evidências contidas nas Notas Explicativas.",
                 panel: `
                     <div class="flex flex-col gap-6 mb-8 mt-2">
                         <div class="bg-white border-l-4 border-[#97164f] p-6 md:p-8 rounded-r-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
@@ -224,26 +224,26 @@
                             </h3>
                             <ul class="text-lg md:text-xl text-gray-800 space-y-5 list-disc pl-6 leading-relaxed text-pretty marker:text-gray-400">
                                 <li><strong>Nota 12 (Op. Descontinuadas):</strong> <span class="bg-yellow-100/50">R$ 55 mil do lucro (27,5% do total) decorrem de ganho de capital na venda emergencial de um parque fabril desativado.</span></li>
-                                <li><strong>Nota 18 (Endividamento):</strong> R$ 380 mil vencem nos primeiros 90 dias de 2028, com cláusula de aceleração automática em caso de rebaixamento de rating.</li>
-                                <li><strong>Nota 24 (Despesas por Natureza):</strong> A alegada "redução de custos" ocorreu por <span class="bg-yellow-100/50">corte de 30% do quadro técnico e postergação de manutenção preventiva</span> de maquinários.</li>
-                                <li><strong>Formato Geral:</strong> Mais de 40 páginas copiando literalmente os conceitos teóricos do CPC 00 e CPC 26, soterrando o detalhamento dos riscos práticos.</li>
+                                <li><strong>Nota 18 (Endividamento):</strong> R$ 380 mil vencem nos primeiros 90 dias de 2028, decorrente de políticas de expanções em 'clientes' com a concessão de prazos, consequentemente afetando o caixa e pagamentos em 2027.</li>
+                                <li><strong>Nota 24 (Despesas por Natureza):</strong> A alegada 'redução de custos' ocorreu por <span class="bg-yellow-100/50">corte de 30% do quadro técnico e postergação de manutenção que afetam a capacidade produtiva futura</span> de maquinários.</li>
+                                <li><strong>Formato Geral:</strong> Mais de 20 páginas discorrendo sobre conceitos teóricos do CPC 00 e CPC 26, sem o detalhamento dos riscos práticos.</li>
                             </ul>
                         </div>
                     </div>
                 `,
                 question: "Ao realizar a análise informacional da empresa, como você deve avaliar criticamente o conjunto formado pelo Relatório da Administração e pelas Notas Explicativas?",
                 options: [
-                    "A) A divulgação é robusta e defensiva. A extensa reprodução de textos normativos nas Notas Explicativas garante a conformidade com as exigências da CVM, enquanto o Relatório da Administração exerce de forma legítima o seu papel focado em otimismo comercial.",
-                    "B) Há claro gerenciamento de impressões (Impression Management) no Relatório da Administração ao omitir que a eficiência adveio de cortes insustentáveis e da alienação de ativos. Simultaneamente, as Notas Explicativas descumprem a OCPC 07 pelo inchaço informativo, usando teoria genérica para camuflar o risco prático da operação.",
-                    "C) A omissão sobre as operações descontinuadas no MD&A não configura assimetria informacional grave, desde que o montante de R$ 55.000 esteja perfeitamente isolado e auditado na respectiva linha da DRE, garantindo a primazia dos dados quantitativos.",
+                    "A) A divulgação é robusta e justificada. O empenho em reprodução de textos normativos nas Notas Explicativas garante a conformidade com as exigências da CVM, enquanto o Relatório da Administração exerce de forma legítima o seu papel focado em otimismo comercial.",
+                    "B) Há claro gerenciamento de impressões (Impression Management) no Relatório da Administração ao omitir que a eficiência veio de cortes insustentáveis e da alienação de ativos. Simultaneamente, as Notas Explicativas descumprem a OCPC 07 pelo inchaço informativo, usando teoria genérica para camuflar o risco prático da operação.",
+                    "C) A omissão sobre as operações descontinuadas no MD&A não configura assimetria informacional grave, desde que o montante de R$ 55.000 esteja perfeitamente isolado e auditado na respectiva linha da DR, garantindo a primazia dos dados quantitativos.",
                     "D) A empresa incorreu em grave desvio técnico (Resolução CVM 80/2022) ao reportar a venda do parque fabril na Nota 12, quando a norma exige a criação de uma Medida de Desempenho (MDDA), como o 'EBITDA Ajustado', no próprio corpo do balanço para tratar esses efeitos não-recorrentes."
                 ],
                 correctIndex: 1,
                 feedbacks: [
-                    "Incorreto. O 'disclosure defensivo' (copiar o CPC apenas para evitar processos) é uma limitação da qualidade contábil fortemente combatida pelos normatizadores. Notas devem trazer a realidade da empresa, não a teoria do manual. Além disso, o otimismo comercial não pode violar a representação fidedigna das operações.",
+                    "Incorreto. O 'disclosure defensivo', nesse caso, sendo copiar o CPC apenas para coordenar uma narrativa que distorce, é uma limitação da qualidade contábil fortemente combatida pelos normatizadores. Notas devem trazer a realidade da empresa, não a teoria do manual. Além disso, o otimismo comercial não pode violar a representação fidedigna das operações.",
                     "Brilhante! Você identificou a armadilha. O Relatório da Administração foi usado para distorcer a realidade (Impression Management), vendendo uma 'excelência' que, na verdade, era venda de patrimônio (R$ 55 mil) e cortes perigosos. Paralelamente, copiar teoria para as notas é condenado pela OCPC 07, pois cria o Disclosure Overload, dificultando a visualização de que a empresa está à beira de um abismo de liquidez com R$ 380 mil vencendo.",
-                    "Incorreto. O Relatório da Administração é o principal canal de diálogo narrativo da gestão com o mercado. Omitir nele a natureza não recorrente de quase um terço do resultado, creditando o lucro exclusivamente à 'eficiência', induz o leitor a erro e agrava severamente a assimetria informacional.",
-                    "Incorreto. Nenhuma norma ou resolução *exige* a criação de uma MDDA. A exigência contábil real é a evidenciação da operação descontinuada no DRE e na respectiva Nota Explicativa. O erro real da empresa foi o tom de gerenciamento de impressões na narrativa do MD&A e o inchaço informacional."
+                    "Incorreto. O Relatório da Administração é o principal canal de diálogo narrativo da gestão com o mercado. Omitir nele a natureza não recorrente de quase um terço do resultado, creditando o lucro exclusivamente à 'eficiência', induz os Stekeholders a erro e agrava severamente a assimetria informacional.",
+                    "Incorreto. Nenhuma norma ou resolução *exige* a criação de uma MDDA. A exigência contábil real é a evidenciação da operação descontinuada no DR e na respectiva Nota Explicativa. O erro real da empresa foi o tom de gerenciamento de impressões na narrativa do MD&A e o inchaço informacional."
                 ]
             }
         ];
@@ -253,7 +253,6 @@
             "Eu não falhei. Só descobri 10 mil caminhos que não eram o certo. – Thomas Edison",
             "O maior erro que você pode cometer é o de ficar o tempo todo com medo de cometer algum. – Elbert Hubbard",
             "O sucesso é ir de fracasso em fracasso sem perder o entusiasmo. – Winston Churchill",
-            "Na análise contábil, o erro de hoje é o acerto blindado de amanhã. Tente novamente!"
         ];
 
         const app = document.getElementById('app');
