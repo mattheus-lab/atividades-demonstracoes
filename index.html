@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Completinha S.A. - Desafio Interativo</title>
-    <!-- Importando a Fonte Premium Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -12,14 +11,12 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
-        /* Animações Base */
         .fade-in { animation: fadeIn 0.4s ease-in-out; }
         @keyframes fadeIn { 
             from { opacity: 0; transform: translateY(10px); } 
             to { opacity: 1; transform: translateY(0); } 
         }
         
-        /* Efeito de Erro (Shake) */
         .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
         @keyframes shake {
             10%, 90% { transform: translate3d(-1px, 0, 0); }
@@ -30,23 +27,17 @@
 
         body { 
             font-family: 'Inter', system-ui, -apple-system, sans-serif; 
-            background-color: #f8fafc; /* Off-white elegante */
+            background-color: #f8fafc; 
             -webkit-tap-highlight-color: transparent; 
         }
         
-        /* Barra de rolagem */
         .custom-scrollbar::-webkit-scrollbar { width: 8px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1b3c0; border-radius: 4px; border: 2px solid #f8fafc; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #97164f; }
-        
-        /* Previne quebras do R$ */
-        .no-wrap-value { white-space: nowrap !important; display: inline-block; }
 
-        /* Container expandido */
         #app { min-height: 100vh; border-radius: 0; border: none; box-shadow: none; }
         
-        /* Tooltip personalizado */
         .tooltip-text {
             visibility: hidden; opacity: 0;
             transition: opacity 0.2s ease, transform 0.2s ease;
@@ -64,84 +55,82 @@
     </div>
 
     <script>
-        // --- GERENCIAMENTO DE ESTADO (Gamificação) ---
         let appState = {
             attempts: [0, 0, 0],
             completed: [false, false, false]
         };
 
-        // --- BASE DE DADOS DAS ATIVIDADES ---
         const activities = [
             {
                 title: "Atividade 1: A Tríade Financeira",
                 roleplay: "Você é um <strong>Analista de Crédito Sênior</strong> de um grande banco comercial. O CFO da Completinha S.A. acaba de solicitar a renovação de uma linha de crédito rotativo de curtíssimo prazo no valor de R$ 150.000. Ele entrega as demonstrações de 2027 e argumenta: <em>'Nosso Lucro Líquido de R$ 200.000 demonstra forte pujança. Além disso, com a adoção do <span class=\"tooltip-group relative inline-block border-b-2 border-dotted border-[#97164f] cursor-help font-bold text-[#97164f]\">CPC 51<span class=\"tooltip-text absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-50 text-center font-normal tracking-wide\">Novo normativo alinhado ao IFRS 18 focado na apresentação estruturada das demonstrações.</span></span>, nosso Lucro Operacional de R$ 190.000 ficou livre de ruídos de investimento, garantindo plena capacidade de honrar esse compromisso imediato.'</em>",
                 panel: `
-                    <div class="bg-white border border-gray-200 rounded-xl overflow-hidden mb-8 shadow-sm text-base md:text-lg">
-                        <div class="bg-[#97164f] text-white p-4 font-bold text-center tracking-wide">[DEMONSTRAÇÃO DO RESULTADO — CPC 51]</div>
-                        <table class="w-full text-left border-collapse table-fixed">
+                    <div class="bg-white border border-gray-200 rounded-xl overflow-hidden mb-8 shadow-sm">
+                        <div class="bg-[#97164f] text-white px-3 py-4 font-bold text-center tracking-wide text-sm md:text-base">[DEMONSTRAÇÃO DO RESULTADO — CPC 51]</div>
+                        <table class="w-full text-left border-collapse">
                             <tbody>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4">1. Categoria Operacional (Lucro Op.)</td>
-                                    <td class="p-4 text-right font-bold w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value">R$ 190.000</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base">1. Categoria Operacional (Lucro Op.)</td>
+                                    <td class="px-4 py-3 md:p-4 text-right font-bold w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base"><span class="text-[#97164f]">R$ 190.000</span></td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4">2. Categoria de Investimento (<span class="tooltip-group relative inline-block border-b border-dotted border-gray-500 cursor-help font-medium">MEP<span class="tooltip-text absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-50 text-center font-normal">Método da Equivalência Patrimonial (Ganhos em Controladas)</span></span>)</td>
-                                    <td class="p-4 text-right text-gray-600 w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value">R$ 60.000</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base">2. Categoria de Investimento (<span class="tooltip-group relative inline-block border-b border-dotted border-gray-500 cursor-help font-medium">MEP<span class="tooltip-text absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-50 text-center font-normal">Método da Equivalência Patrimonial (Ganhos em Controladas)</span></span>)</td>
+                                    <td class="px-4 py-3 md:p-4 text-right text-gray-600 w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 60.000</td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4">3. Categoria de Financiamento (Juros)</td>
-                                    <td class="p-4 text-right w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value text-[#97164f] font-semibold">(R$ 45.000)</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base">3. Categoria de Financiamento (Juros)</td>
+                                    <td class="px-4 py-3 md:p-4 text-right w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base"><span class="text-[#97164f] font-semibold">(R$ 45.000)</span></td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4">4. Categoria de Tributos sobre o Lucro</td>
-                                    <td class="p-4 text-right w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value text-[#97164f] font-semibold">(R$ 60.000)</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base">4. Categoria de Tributos sobre o Lucro</td>
+                                    <td class="px-4 py-3 md:p-4 text-right w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base"><span class="text-[#97164f] font-semibold">(R$ 60.000)</span></td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4">5. Categoria de Op. Descontinuadas</td>
-                                    <td class="p-4 text-right text-gray-600 w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value">R$ 55.000</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base">5. Categoria de Op. Descontinuadas</td>
+                                    <td class="px-4 py-3 md:p-4 text-right text-gray-600 w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 55.000</td>
                                 </tr>
                                 <tr class="bg-[#fdf2f4] font-bold hover:bg-[#fce4eb] transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4">(=) LUCRO LÍQUIDO DO PERÍODO</td>
-                                    <td class="p-4 text-right text-[#97164f] w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value">R$ 200.000</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base">(=) LUCRO LÍQUIDO DO PERÍODO</td>
+                                    <td class="px-4 py-3 md:p-4 text-right font-bold w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base"><span class="text-[#97164f]">R$ 200.000</span></td>
                                 </tr>
                             </tbody>
                         </table>
                         
-                        <div class="bg-gray-100 text-gray-800 p-4 font-bold text-center border-t border-b border-gray-200 tracking-wide">[DFC (MÉTODO INDIRETO)]</div>
-                        <table class="w-full text-left border-collapse table-fixed">
+                        <div class="bg-gray-100 text-gray-800 px-3 py-4 font-bold text-center border-t border-b border-gray-200 tracking-wide text-sm md:text-base">[DFC (MÉTODO INDIRETO)]</div>
+                        <table class="w-full text-left border-collapse">
                             <tbody>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4">Lucro Líquido do Período</td>
-                                    <td class="p-4 text-right w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value">R$ 200.000</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base">Lucro Líquido do Período</td>
+                                    <td class="px-4 py-3 md:p-4 text-right w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 200.000</td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4">(+) Depreciação e Amortização</td>
-                                    <td class="p-4 text-right w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value">R$ 50.000</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base">(+) Depreciação e Amortização</td>
+                                    <td class="px-4 py-3 md:p-4 text-right w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 50.000</td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4">(-) Itens Não-Caixa (MEP e Op. Desc.)</td>
-                                    <td class="p-4 text-right w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value text-[#97164f] font-semibold">(R$ 110.000)</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base">(-) Itens Não-Caixa (MEP e Op. Desc.)</td>
+                                    <td class="px-4 py-3 md:p-4 text-right w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base"><span class="text-[#97164f] font-semibold">(R$ 110.000)</span></td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4">(-) Variação de Contas a Receber</td>
-                                    <td class="p-4 text-right w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value text-[#97164f] font-semibold">(R$ 165.000)</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base">(-) Variação de Contas a Receber</td>
+                                    <td class="px-4 py-3 md:p-4 text-right w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base"><span class="text-[#97164f] font-semibold">(R$ 165.000)</span></td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4">(-) Variação de Fornecedores</td>
-                                    <td class="p-4 text-right w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value text-[#97164f] font-semibold">(R$ 75.000)</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base">(-) Variação de Fornecedores</td>
+                                    <td class="px-4 py-3 md:p-4 text-right w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base"><span class="text-[#97164f] font-semibold">(R$ 75.000)</span></td>
                                 </tr>
                                 <tr class="bg-gray-50 font-bold hover:bg-gray-100 transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4">(=) Caixa Líq. das Operações (FCO)</td>
-                                    <td class="p-4 text-right w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value text-[#97164f] font-bold">(R$ 100.000)</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base">(=) Caixa Líq. das Operações (FCO)</td>
+                                    <td class="px-4 py-3 md:p-4 text-right font-bold w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base"><span class="text-[#97164f]">(R$ 100.000)</span></td>
                                 </tr>
                             </tbody>
                         </table>
                         
                         <!-- Rodapé de Destaque -->
-                        <div class="p-5 bg-white flex flex-col sm:flex-row justify-center sm:justify-around items-center gap-2 sm:gap-6 border-t border-gray-200">
-                            <div class="text-lg md:text-xl font-bold text-gray-700">Caixa Final: <span class="text-green-600">R$ 50.000</span></div>
+                        <div class="p-4 md:p-5 bg-white flex flex-col sm:flex-row justify-center sm:justify-around items-center gap-2 sm:gap-6 border-t border-gray-200">
+                            <div class="text-base md:text-xl font-bold text-gray-700">Caixa Final: <span class="text-green-600">R$ 50.000</span></div>
                             <div class="hidden sm:block text-gray-300">|</div>
-                            <div class="text-lg md:text-xl font-bold text-gray-700">Passivo Imediato: <span class="text-[#97164f]">R$ 380.000</span></div>
+                            <div class="text-base md:text-xl font-bold text-gray-700">Passivo Imediato: <span class="text-[#97164f]">R$ 380.000</span></div>
                         </div>
                     </div>
                 `,
@@ -164,36 +153,35 @@
                 title: "Atividade 2: Dinâmica Patrimonial e Riqueza",
                 roleplay: "Você é o gestor de um <strong>Fundo de Ações</strong> focado em empresas que remuneram bem seus acionistas. Ao avaliar a política de alocação de capital da Completinha S.A., você nota que a empresa reportou um Lucro Líquido de R$ 200.000. Durante a Assembleia Geral, um grupo de acionistas minoritários acusa a diretoria de não compartilhar a riqueza gerada, pois o pagamento de dividendos foi 'baixo'. Você abre a DMPL e a DVA para investigar o fato.",
                 panel: `
-                    <div class="bg-white border border-[#97164f] rounded-xl overflow-hidden mb-8 shadow-sm text-base md:text-lg">
-                        <div class="bg-[#fdf2f4] text-[#97164f] p-4 font-bold text-center tracking-wide border-b border-[#97164f]">[MUTAÇÕES DO PL E DISTRIBUIÇÃO DA DVA]</div>
-                        <table class="w-full text-left border-collapse table-fixed">
+                    <div class="bg-white border border-[#97164f] rounded-xl overflow-hidden mb-8 shadow-sm">
+                        <div class="bg-[#fdf2f4] text-[#97164f] px-3 py-4 font-bold text-center tracking-wide border-b border-[#97164f] text-sm md:text-base">[MUTAÇÕES DO PL E DISTRIBUIÇÃO DA DVA]</div>
+                        <table class="w-full text-left border-collapse">
                             <tbody>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4">Lucro Líquido do Período 2027</td>
-                                    <td class="p-4 text-right font-bold w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value">R$ 200.000</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base">Lucro Líquido do Período 2027</td>
+                                    <td class="px-4 py-3 md:p-4 text-right font-bold w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 200.000</td>
                                 </tr>
                                 
-                                <!-- Destaques Sutis para as Destinações -->
                                 <tr class="border-b bg-[#fdf2f4]/50 hover:bg-[#fdf2f4] transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4 pl-6 md:pl-8 border-l-4 border-[#d1b3c0] text-gray-700">Retenção para Reserva de Expansão</td>
-                                    <td class="p-4 text-right text-gray-700 font-semibold w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value">R$ 140.000</span></td>
+                                    <td class="px-4 py-3 md:p-4 pl-6 md:pl-8 border-l-4 border-[#d1b3c0] text-gray-700 text-sm md:text-base">Retenção para Reserva de Expansão</td>
+                                    <td class="px-4 py-3 md:p-4 text-right text-gray-700 font-semibold w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 140.000</td>
                                 </tr>
                                 <tr class="border-b bg-[#fdf2f4]/50 hover:bg-[#fdf2f4] transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4 pl-6 md:pl-8 border-l-4 border-[#d1b3c0] text-gray-700">Retenção para Reserva Legal</td>
-                                    <td class="p-4 text-right text-gray-700 font-semibold w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value">R$ 10.000</span></td>
+                                    <td class="px-4 py-3 md:p-4 pl-6 md:pl-8 border-l-4 border-[#d1b3c0] text-gray-700 text-sm md:text-base">Retenção para Reserva Legal</td>
+                                    <td class="px-4 py-3 md:p-4 text-right text-gray-700 font-semibold w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 10.000</td>
                                 </tr>
                                 <tr class="border-b bg-[#fdf2f4]/50 hover:bg-[#fdf2f4] transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4 pl-6 md:pl-8 border-l-4 border-[#d1b3c0] text-[#97164f] font-semibold">Distribuição de Dividendos Propostos</td>
-                                    <td class="p-4 text-right font-bold text-[#97164f] w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value">R$ 50.000</span></td>
+                                    <td class="px-4 py-3 md:p-4 pl-6 md:pl-8 border-l-4 border-[#d1b3c0] text-[#97164f] font-semibold text-sm md:text-base">Distribuição de Dividendos Propostos</td>
+                                    <td class="px-4 py-3 md:p-4 text-right font-bold text-[#97164f] w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 50.000</td>
                                 </tr>
                                 
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
-                                    <td class="p-4 w-2/3 md:w-3/4"><span class="tooltip-group relative inline-block border-b border-dotted border-gray-500 cursor-help">Outros Resultados Abrangentes (ORA)<span class="tooltip-text absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-50 text-center font-normal">Variações patrimoniais que não transitam pela DRE (Ex: Variação cambial de investida no exterior)</span></span></td>
-                                    <td class="p-4 text-right text-gray-600 w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value">R$ 15.000</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base"><span class="tooltip-group relative inline-block border-b border-dotted border-gray-500 cursor-help">Outros Resultados Abrangentes (ORA)<span class="tooltip-text absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-50 text-center font-normal">Variações patrimoniais que não transitam pela DRE (Ex: Variação cambial de investida no exterior)</span></span></td>
+                                    <td class="px-4 py-3 md:p-4 text-right text-gray-600 w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 15.000</td>
                                 </tr>
                                 <tr class="bg-[#97164f] text-white font-bold hover:bg-[#7a123f] transition-colors cursor-default">
-                                    <td class="p-4 w-2/3 md:w-3/4">Remuneração de Capitais Próprios (DVA)</td>
-                                    <td class="p-4 text-right w-1/3 md:w-1/4 min-w-[100px]"><span class="no-wrap-value">R$ 200.000</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-sm md:text-base">Remuneração de Capitais Próprios (DVA)</td>
+                                    <td class="px-4 py-3 md:p-4 text-right w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 200.000</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -294,20 +282,16 @@
             const act = activities[activityIndex];
             const isCorrect = selectedOptionIndex === act.correctIndex;
             
-            // Registra a tentativa
             appState.attempts[activityIndex]++;
             
             if(!isCorrect) {
-                // Efeito Shake no botão clicado
                 const btn = document.getElementById(`opt-btn-${selectedOptionIndex}`);
                 btn.classList.add('shake', 'bg-red-50', 'border-red-400', 'text-red-900');
                 
-                // Aguarda a animação acabar para mudar de tela
                 setTimeout(() => {
                     navigate({ view: 'feedback', actIndex: activityIndex, optIndex: selectedOptionIndex });
                 }, 400);
             } else {
-                // Marca como concluído
                 appState.completed[activityIndex] = true;
                 navigate({ view: 'feedback', actIndex: activityIndex, optIndex: selectedOptionIndex });
             }
@@ -362,7 +346,6 @@
         function _renderSeminarioMenu() {
             let buttonsHtml = '';
             activities.forEach((act, index) => {
-                // Checa no Estado de Gamificação se já foi concluído
                 const isCompleted = appState.completed[index];
                 const badgeHtml = isCompleted 
                     ? `<span class="bg-green-100 text-green-700 px-3 py-1 rounded-lg text-sm font-bold flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> Concluída</span>` 
@@ -402,7 +385,6 @@
             const act = activities[index];
             let optionsHtml = '';
             
-            // Barra de Progresso
             const progressPercent = ((index + 1) / activities.length) * 100;
             
             act.options.forEach((opt, optIndex) => {
@@ -416,7 +398,6 @@
             app.innerHTML = `
                 <div class="fade-in flex flex-col w-full h-full xl:max-w-[1400px] mx-auto">
                     
-                    <!-- Barra de Progresso Visível -->
                     <div class="w-full bg-gray-200 h-1.5 rounded-full mb-6 overflow-hidden">
                         <div class="bg-[#97164f] h-1.5 rounded-full transition-all duration-500" style="width: ${progressPercent}%"></div>
                     </div>
