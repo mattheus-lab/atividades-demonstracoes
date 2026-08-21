@@ -38,6 +38,8 @@
 
         #app { min-height: 100vh; border-radius: 0; border: none; box-shadow: none; }
         
+        .no-wrap-value { white-space: nowrap !important; display: inline-block; }
+        
         .tooltip-text {
             visibility: hidden; opacity: 0;
             transition: opacity 0.2s ease, transform 0.2s ease;
@@ -71,11 +73,11 @@
                             <tbody>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
                                     <td class="px-4 py-3 md:p-4 text-sm md:text-base">1. Categoria Operacional (Lucro Op.)</td>
-                                    <td class="px-4 py-3 md:p-4 text-right font-bold w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base"><span class="text-[#97164f]">R$ 190.000</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-right font-bold w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base"><span class="text-[#97164f]">R$ 190.000<span class="invisible">)</span></span></td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
                                     <td class="px-4 py-3 md:p-4 text-sm md:text-base">2. Categoria de Investimento (<span class="tooltip-group relative inline-block border-b border-dotted border-gray-500 cursor-help font-medium">MEP<span class="tooltip-text absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-50 text-center font-normal">Método da Equivalência Patrimonial (Ganhos em Controladas)</span></span>)</td>
-                                    <td class="px-4 py-3 md:p-4 text-right text-gray-600 w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 60.000</td>
+                                    <td class="px-4 py-3 md:p-4 text-right text-gray-600 w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 60.000<span class="invisible">)</span></td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
                                     <td class="px-4 py-3 md:p-4 text-sm md:text-base">3. Categoria de Financiamento (Juros)</td>
@@ -87,11 +89,11 @@
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
                                     <td class="px-4 py-3 md:p-4 text-sm md:text-base">5. Categoria de Op. Descontinuadas</td>
-                                    <td class="px-4 py-3 md:p-4 text-right text-gray-600 w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 55.000</td>
+                                    <td class="px-4 py-3 md:p-4 text-right text-gray-600 w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 55.000<span class="invisible">)</span></td>
                                 </tr>
                                 <tr class="bg-[#fdf2f4] font-bold hover:bg-[#fce4eb] transition-colors">
                                     <td class="px-4 py-3 md:p-4 text-sm md:text-base">(=) LUCRO LÍQUIDO DO PERÍODO</td>
-                                    <td class="px-4 py-3 md:p-4 text-right font-bold w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base"><span class="text-[#97164f]">R$ 200.000</span></td>
+                                    <td class="px-4 py-3 md:p-4 text-right font-bold w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base"><span class="text-[#97164f]">R$ 200.000<span class="invisible">)</span></span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -101,11 +103,11 @@
                             <tbody>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
                                     <td class="px-4 py-3 md:p-4 text-sm md:text-base">Lucro Líquido do Período</td>
-                                    <td class="px-4 py-3 md:p-4 text-right w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 200.000</td>
+                                    <td class="px-4 py-3 md:p-4 text-right w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 200.000<span class="invisible">)</span></td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
                                     <td class="px-4 py-3 md:p-4 text-sm md:text-base">(+) Depreciação e Amortização</td>
-                                    <td class="px-4 py-3 md:p-4 text-right w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 50.000</td>
+                                    <td class="px-4 py-3 md:p-4 text-right w-[1%] whitespace-nowrap tabular-nums text-sm md:text-base">R$ 50.000<span class="invisible">)</span></td>
                                 </tr>
                                 <tr class="border-b hover:bg-gray-50 transition-colors">
                                     <td class="px-4 py-3 md:p-4 text-sm md:text-base">(-) Itens Não-Caixa (MEP e Op. Desc.)</td>
@@ -126,7 +128,6 @@
                             </tbody>
                         </table>
                         
-                        <!-- Rodapé de Destaque -->
                         <div class="p-4 md:p-5 bg-white flex flex-col sm:flex-row justify-center sm:justify-around items-center gap-2 sm:gap-6 border-t border-gray-200">
                             <div class="text-base md:text-xl font-bold text-gray-700">Caixa Final: <span class="text-green-600">R$ 50.000</span></div>
                             <div class="hidden sm:block text-gray-300">|</div>
@@ -207,7 +208,6 @@
                 roleplay: "Você é um <strong>Analista Sênior de M&A e Governança</strong>. Foi contratado para realizar a due diligence investigativa da Completinha S.A. visando uma aquisição. Para entender os riscos reais do negócio, você confronta a narrativa persuasiva apresentada pela diretoria no <span class=\"tooltip-group relative inline-block border-b border-dotted border-[#97164f] text-[#97164f] font-semibold cursor-help\">MD&A<span class=\"tooltip-text absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-50 text-center font-normal\">Management Discussion and Analysis (Relatório da Administração)</span></span> com as frias evidências contidas nas Notas Explicativas.",
                 panel: `
                     <div class="flex flex-col gap-6 mb-8 mt-2">
-                        <!-- Relatório da Adm -->
                         <div class="bg-white border-l-4 border-[#97164f] p-6 md:p-8 rounded-r-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
                             <h3 class="text-[#97164f] font-black text-sm md:text-base uppercase mb-4 tracking-wider flex items-center">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
@@ -216,7 +216,6 @@
                             <p class="text-lg md:text-xl text-gray-800 italic leading-relaxed text-pretty">"O exercício de 2027 consagrou o sucesso absoluto da nossa disciplina de custos e excelência operacional, gerando um Lucro Líquido histórico de R$ 200 milhões, salto de 40% no PL e expansão sem precedentes de nossas margens de eficiência comercial."</p>
                         </div>
                         
-                        <!-- Notas Explicativas -->
                         <div class="bg-white border-l-4 border-gray-400 p-6 md:p-8 rounded-r-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow">
                             <h3 class="text-gray-800 font-black text-sm md:text-base uppercase mb-4 tracking-wider flex items-center">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -258,7 +257,6 @@
 
         const app = document.getElementById('app');
 
-        // --- HISTORY API ---
         function navigate(state, push = true) {
             if (push) { history.pushState(state, "", ""); }
             if (state.view === 'home') _renderHome();
@@ -287,10 +285,7 @@
             if(!isCorrect) {
                 const btn = document.getElementById(`opt-btn-${selectedOptionIndex}`);
                 btn.classList.add('shake', 'bg-red-50', 'border-red-400', 'text-red-900');
-                
-                setTimeout(() => {
-                    navigate({ view: 'feedback', actIndex: activityIndex, optIndex: selectedOptionIndex });
-                }, 400);
+                setTimeout(() => { navigate({ view: 'feedback', actIndex: activityIndex, optIndex: selectedOptionIndex }); }, 400);
             } else {
                 appState.completed[activityIndex] = true;
                 navigate({ view: 'feedback', actIndex: activityIndex, optIndex: selectedOptionIndex });
@@ -384,12 +379,11 @@
         function _renderActivity(index) {
             const act = activities[index];
             let optionsHtml = '';
-            
             const progressPercent = ((index + 1) / activities.length) * 100;
             
             act.options.forEach((opt, optIndex) => {
                 optionsHtml += `
-                    <button id="opt-btn-${optIndex}" onclick="handleAnswer(${index}, ${optIndex})" class="w-full text-left p-6 mb-6 bg-white border-2 border-gray-200 rounded-xl hover:bg-[#fdf2f4] active:bg-gray-100 hover:border-[#97164f] transition-all duration-200 hover:-translate-y-1 hover:shadow-md text-lg md:text-xl font-medium text-gray-800 leading-relaxed shadow-sm text-pretty relative">
+                    <button id="opt-btn-${optIndex}" onclick="handleAnswer(${index}, ${optIndex})" class="w-full text-left p-6 bg-white border-2 border-gray-200 rounded-xl hover:bg-[#fdf2f4] active:bg-gray-100 hover:border-[#97164f] transition-all duration-200 hover:-translate-y-1 hover:shadow-md text-lg md:text-xl font-medium text-gray-800 leading-relaxed shadow-sm text-pretty relative">
                         ${opt}
                     </button>
                 `;
@@ -423,7 +417,7 @@
                         
                         <div class="w-full lg:w-[52%] flex flex-col pt-2">
                             <h2 class="text-2xl md:text-3xl font-black text-gray-900 mb-8 leading-relaxed border-b border-gray-200 pb-5 text-pretty">${act.question}</h2>
-                            <div class="space-y-4">
+                            <div class="flex flex-col gap-5">
                                 ${optionsHtml}
                             </div>
                         </div>
@@ -460,7 +454,7 @@
             if(!isCorrect) {
                 const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
                 quoteHtml = `<div class="italic text-gray-500 text-lg mt-8 px-6 border-t border-gray-200 pt-6">"${randomQuote}"</div>`;
-                attemptHtml = `<span class="bg-gray-100 text-gray-600 text-sm font-bold px-3 py-1 rounded-full absolute top-6 right-6">Tentativa nº ${appState.attempts[activityIndex]}</span>`;
+                attemptHtml = `<span class="bg-gray-100 text-gray-600 text-sm font-bold px-3 py-1 rounded-full absolute top-6 right-6 shadow-sm">Tentativa nº ${appState.attempts[activityIndex]}</span>`;
             }
 
             app.innerHTML = `
