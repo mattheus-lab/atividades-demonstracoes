@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completinha S.A. - Desafio Interativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Biblioteca para a chuva de confetes -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        .fade-in { animation: fadeIn 0.35s ease-in-out; }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(8px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            background-color: #f0fdf4; /* Fundo levemente esverdeado/financeiro */
+            -webkit-tap-highlight-color: transparent; 
+        }
+        /* Estilização da barra de rolagem para o painel de atividades */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 text-gray-800">
+
+    <div id="app" class="bg-white rounded-3xl shadow-2xl w-full max-w-lg p-6 fade-in min-h-[500px] max-h-[90vh] flex flex-col relative overflow-hidden custom-scrollbar overflow-y-auto border border-gray-100">
+        <!-- O conteúdo será injetado pelo JavaScript -->
+    </div>
+
+    <script>
+        // --- BASE DE DADOS DAS ATIVIDADES ---
+        const activities = [
+            {
+                title: "Atividade 1: A Tríade Financeira",
+                roleplay: "Você é um <strong>Analista de Crédito Sênior</strong> de um grande banco comercial. O CFO da Completinha S.A. acaba de solicitar a renovação de uma linha de crédito rotativo de curtíssimo prazo no valor de R$ 150.000. Ele entrega as demonstrações de 2027 e argumenta: <em>'Nosso Lucro Líquido de R$ 200.000 demonstra forte pujança. Além disso, com a adoção do CPC 51, nosso Lucro Operacional de R$ 190.000 ficou livre de ruídos de investimento, garantindo plena capacidade de honrar esse compromisso imediato.'</em>",
+                panel: `
+                    <div class="bg-slate-800 text-white p-4 rounded-xl text-xs sm:text-sm font-mono mb-4 shadow-inner">
+                        <div class="text-blue-300 font-bold border-b border-slate-600 pb-2 mb-2">[DEMONSTRAÇÃO DO RESULTADO — CPC 51]</div>
+                        <ul class="space-y-1">
+                            <li>1. Categoria Operacional (Lucro Op.): <span class="float-right font-bold">R$ 190.000</span></li>
+                            <li>2. Categoria de Investimento (MEP): <span class="float-right text-green-400">R$ 60.000</span></li>
+                            <li>3. Categoria de Financiamento (Juros): <span class="float-right text-red-400">(R$ 45.000)</span></li>
+                            <li>4. Categoria de Tributos sobre Lucro: <span class="float-right text-red-400">(R$ 60.000)</span></li>
+                            <li>5. Categoria de Op. Descontinuadas: <span class="float-right text-green-400">R$ 55.000</span></li>
+                            <li class="border-t border-slate-600 pt-1 mt-1 font-bold text-yellow-300">(=) LUCRO LÍQUIDO DO PERÍODO: <span class="float-right">R$ 200.000</span></li>
+                        </ul>
+                        <div class="text-blue-300 font-bold border-b border-slate-600 pb-2 mb-2 mt-4">[DFC (MÉTODO INDIRETO)]</div>
+                        <ul class="space-y-1">
+                            <li>Lucro Líquido do Período: <span class="float-right">R$ 200.000</span></li>
+                            <li>(+) Depreciação e Amortização: <span class="float-right text-green-400">R$ 50.000</span></li>
+                            <li>(-) Itens Não-Caixa (MEP e Op. Desc.): <span class="float-right text-red-400">(R$ 110.000)</span></li>
+                            <li>(-) Variação de Contas a Receber: <span class="float-right text-red-400">(R$ 165.000)</span></li>
+                            <li>(-) Variação de Fornecedores: <span class="float-right text-red-400">(R$ 75.000)</span></li>
+                            <li class="border-t border-slate-600 pt-1 mt-1 font-bold text-red-400">(=) Caixa Líq. das Operações (FCO): <span class="float-right">(R$ 100.000)</span></li>
+                        </ul>
+                        <div class="mt-3 pt-2 border-t border-slate-700 text-center text-gray-400">
+                            (Caixa Final: R$ 50.000 | Passivo Circulante Imediato: R$ 380.000)
+                        </div>
+                    </div>
+                `,
+                question: "Ao confrontar o desempenho econômico reportado na DRE (estruturada conforme o CPC 51) com a dinâmica de conversão financeira na DFC (Método Indireto) e os saldos de liquidez do Balanço Patrimonial, qual diagnóstico técnico deve fundamentar a sua decisão de conceder ou negar a linha de crédito?",
+                options: [
+                    "A) O crédito deve ser deferido, visto que a empresa apresenta forte lucratividade (R$ 200.000) e o descasamento no fluxo operacional é neutralizado pela Depreciação (R$ 50.000), que atua na prática contábil como uma retenção de fundos que protege o caixa da empresa no curtíssimo prazo.",
+                    "B) O crédito deve ser negado ou fortemente condicionado. Apesar do lucro contábil robusto, a DFC revela severa queima de caixa operacional (-R$ 100.000) devido ao represamento de recursos em clientes; além disso, ganhos econômicos como o MEP não geram liquidez imediata, deixando a empresa com apenas R$ 50.000 em caixa para cobrir R$ 380.000 de exigibilidades.",
+                    "C) A concessão é justificada se desconsiderarmos a distorção do CPC 51. Ao realocar os juros bancários para a Categoria de Financiamento na DRE, a norma proíbe a empresa de reportá-los no FCO da DFC, forçando um caixa operacional aparentemente negativo que mascara a real capacidade do giro da empresa.",
+                    "D) A proposta deve ser aprovada. O déficit no fluxo de caixa operacional (-R$ 100.000) é uma anomalia do Método Indireto que deduz o aumento de Contas a Receber. Sob a ótica do risco de crédito bancário de curto prazo, o expressivo contas a receber atua como substituto perfeito de disponibilidades, mitigando o risco de liquidez."
+                ],
+                correctIndex: 1,
+                feedbacks: [
+                    "Incorreto. Este é um mito contábil clássico: a depreciação NÃO é uma reserva financeira e não acumula dinheiro. Ela é somada no Método Indireto da DFC apenas para anular o efeito redutor que teve na DRE (já que não representou saída de caixa no período), mas não cria liquidez alguma para pagar dívidas.",
+                    "Perfeito! Você assumiu o papel do analista que não se ilude com a última linha da DRE. O lucro utiliza o regime de competência, mas o banco é pago com caixa. O MEP e as Operações Descontinuadas representaram 55% do lucro (R$ 110.000), mas não colocaram dinheiro imediato na conta. Com R$ 380 mil vencendo e só R$ 50 mil em caixa, a empresa precisa do empréstimo para sobreviver, e não apenas para girar.",
+                    "Incorreto. Você confundiu o impacto normativo. O CPC 51 realmente afeta a apresentação ao alinhar a DRE e a DFC (levando os juros pagos para as atividades de financiamento em ambas). No entanto, isso *aumenta* (melhora) o Fluxo de Caixa Operacional, e não o contrário. A queima de caixa neste caso adveio puramente de problemas no capital de giro.",
+                    "Incorreto. Contas a Receber possui risco de crédito (inadimplência) e risco de prazo. Para honrar um Passivo Circulante que vence imediatamente, recebíveis que ainda vão demorar a entrar não substituem o Caixa (Disponibilidades). Dinheiro na mão e direito a receber são avaliados de formas drasticamente diferentes no corporate banking."
+                ]
+            },
+            {
+                title: "Atividade 2: Dinâmica Patrimonial e Riqueza",
+                roleplay: "Você é o gestor de um <strong>Fundo de Ações</strong> focado em empresas que remuneram bem seus acionistas. Ao avaliar a política de alocação de capital da Completinha S.A., você nota que a empresa reportou um Lucro Líquido de R$ 200.000. Durante a Assembleia Geral, um grupo de acionistas minoritários acusa a diretoria de não compartilhar a riqueza gerada, pois o pagamento de dividendos foi 'baixo'. Você abre a DMPL e a DVA para investigar o fato.",
+                panel: `
+                    <div class="bg-emerald-50 border border-emerald-200 p-5 rounded-xl text-sm mb-4 shadow-sm text-emerald-900">
+                        <div class="font-bold border-b border-emerald-300 pb-2 mb-3 text-emerald-800">[MUTAÇÕES DO PL E DISTRIBUIÇÃO DA DVA]</div>
+                        <ul class="space-y-2 font-medium">
+                            <li class="flex justify-between"><span>Lucro Líquido do Período 2027:</span> <span class="font-bold">R$ 200.000</span></li>
+                            <li class="flex justify-between"><span>Retenção para Reserva de Expansão:</span> <span>R$ 140.000</span></li>
+                            <li class="flex justify-between"><span>Retenção para Reserva Legal:</span> <span>R$ 10.000</span></li>
+                            <li class="flex justify-between"><span>Distribuição de Dividendos Propostos:</span> <span class="text-blue-700 font-bold">R$ 50.000</span></li>
+                            <li class="flex justify-between"><span>Outros Resultados Abrangentes (ORA):</span> <span>R$ 15.000</span></li>
+                            <li class="flex justify-between border-t border-emerald-300 pt-2 mt-2 font-bold"><span>Remuneração de Capitais Próprios (DVA):</span> <span>R$ 200.000</span></li>
+                        </ul>
+                    </div>
+                `,
+                question: "Cruzando a mecânica de destinação evidenciada na DMPL com os princípios de mensuração do PIB contábil na Demonstração do Valor Adicionado (DVA), qual deve ser o seu veredito técnico na assembleia sobre a remuneração dos acionistas?",
+                options: [
+                    "A) A denúncia dos minoritários procede. A distribuição de apenas R$ 50.000 em dividendos comprova que a maior parcela da riqueza adicionada foi transferida ao Estado e aos fornecedores de capital de giro, reduzindo severamente o 'Valor Adicionado Recebido em Transferência' dos sócios.",
+                    "B) A denúncia é infundada. Contudo, a DVA falha na sua estrutura: a alocação de R$ 140.000 para a Reserva de Expansão, por ser um reinvestimento físico futuro, deveria ser tratada sob o CPC 09 como 'Insumos Adquiridos de Terceiros', e não somada aos R$ 50.000 na linha de capitais próprios.",
+                    "C) A denúncia é infundada, pois a constituição da Reserva Legal e da Reserva de Expansão são apenas mutações internas no PL que não reduzem o direito do dono. A DVA reflete isso corretamente, evidenciando que a totalidade do lucro (R$ 200.000) remunera os Capitais Próprios, dividida de forma transparente entre a parcela distribuída e a reinvestida.",
+                    "D) A denúncia procede parcialmente. A constituição da Reserva Legal (R$ 10.000) diminui o 'Valor Adicionado Líquido Produzido' da DVA, uma vez que se trata de uma retenção de caráter imperativo exigida pela Lei das S.A., atuando tecnicamente como um encargo tributário estadual retido na fonte."
+                ],
+                correctIndex: 2,
+                feedbacks: [
+                    "Incorreto. O valor recebido em dividendos (R$ 50.000) não resume a riqueza destinada aos acionistas na DVA. O Lucro Retido (R$ 150.000) também compõe a 'Remuneração de Capitais Próprios', significando que a empresa compartilhou a riqueza mantendo o valor dentro da cota do acionista.",
+                    "Incorreto. Este distrator mistura os conceitos da DVA. 'Insumos Adquiridos de Terceiros' referem-se aos bens e serviços (como matéria-prima) usados para gerar a receita. A Reserva de Expansão é a destinação (distribuição) do lucro líquido, e jamais um insumo de terceiros.",
+                    "Na mosca! Gestores de fundo sabem que o acionista ganha de duas formas: dinheiro no bolso (dividendos) ou valorização da cota (lucros retidos e reinvestidos). A retenção de lucros para reservas é apenas uma mudança de nome, garantindo que a riqueza gerada continuou dentro do patrimônio da empresa, pertencendo inteiramente ao investidor.",
+                    "Incorreto. A Reserva Legal, mesmo sendo obrigatória por Lei, continua pertencendo integralmente aos acionistas (compondo o Patrimônio Líquido). Ela não é um imposto e jamais deduz o Valor Adicionado Líquido Produzido (o qual só é reduzido pela depreciação e amortização)."
+                ]
+            },
+            {
+                title: "Atividade 3: A Dialética do Relato Integrado",
+                roleplay: "Você é um <strong>Analista Sênior de M&A e Governança</strong>. Foi contratado para realizar a due diligence da Completinha S.A. visando uma aquisição. Para entender os riscos, você confronta a narrativa persuasiva da diretoria no Relatório da Administração (MD&A) com as frias evidências contidas nas Notas Explicativas.",
+                panel: `
+                    <div class="grid grid-cols-1 gap-4 mb-5">
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-xl shadow-sm">
+                            <h3 class="text-blue-800 font-bold text-xs uppercase mb-1">Relatório da Administração (MD&A)</h3>
+                            <p class="text-sm text-gray-700 italic">"O exercício de 2027 consagrou o sucesso absoluto da nossa disciplina de custos e excelência operacional, gerando um Lucro Líquido histórico de R$ 200 milhões, salto de 40% no PL e expansão sem precedentes de nossas margens de eficiência comercial."</p>
+                        </div>
+                        <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-xl shadow-sm">
+                            <h3 class="text-orange-800 font-bold text-xs uppercase mb-1">Notas Explicativas (CPC 26 / OCPC 07)</h3>
+                            <ul class="text-sm text-gray-700 space-y-2 list-disc pl-4">
+                                <li><strong>Nota 12 (Op. Descontinuadas):</strong> R$ 55 mil do lucro (27,5% do total) decorrem de ganho de capital na venda emergencial de um parque fabril.</li>
+                                <li><strong>Nota 18 (Endividamento):</strong> R$ 380 mil vencem nos primeiros 90 dias de 2028, com cláusula de aceleração automática em caso de rebaixamento.</li>
+                                <li><strong>Nota 24 (Despesas por Natureza):</strong> A alegada "redução de custos" ocorreu por corte de 30% do quadro técnico e postergação de manutenção preventiva.</li>
+                                <li><strong>Formato:</strong> 40 páginas copiando literalmente os conceitos dos CPCs, soterrando o detalhamento dos riscos de liquidez.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                question: "Ao realizar a análise informacional da Completinha S.A., como você deve avaliar criticamente o conjunto formado pelo Relatório da Administração e pelas Notas Explicativas?",
+                options: [
+                    "A) A divulgação é robusta e defensiva. A extensa reprodução de textos normativos nas Notas Explicativas garante a conformidade com as exigências da CVM, enquanto o Relatório da Administração exerce de forma legítima o seu papel focado em otimismo comercial.",
+                    "B) Há claro gerenciamento de impressões (Impression Management) no Relatório da Administração ao omitir que a eficiência adveio de cortes insustentáveis e da alienação de ativos. Simultaneamente, as Notas Explicativas descumprem a OCPC 07 pelo inchaço informativo, usando teoria genérica para camuflar o risco prático da operação.",
+                    "C) A omissão sobre as operações descontinuadas no MD&A não configura assimetria informacional grave, desde que o montante de R$ 55.000 esteja perfeitamente isolado e auditado na respectiva linha da DRE, garantindo a primazia dos dados quantitativos.",
+                    "D) A empresa incorreu em grave desvio técnico (Resolução CVM 80/2022) ao reportar a venda do parque fabril na Nota 12, quando a norma exige a criação de uma Medida de Desempenho (MDDA), como o 'EBITDA Ajustado', no próprio corpo do balanço para tratar esses efeitos não-recorrentes."
+                ],
+                correctIndex: 1,
+                feedbacks: [
+                    "Incorreto. O 'disclosure defensivo' (copiar o CPC apenas para evitar processos) é uma limitação da qualidade contábil fortemente combatida. Notas devem trazer a realidade da empresa, não a teoria do manual. Além disso, o otimismo comercial não pode violar a representação fidedigna.",
+                    "Brilhante! Você identificou a armadilha. O Relatório da Administração foi usado para distorcer a realidade, vendendo uma 'excelência' que era venda de patrimônio e cortes perigosos. Paralelamente, copiar teoria para as notas é condenado pela OCPC 07, pois cria o Disclosure Overload, dificultando a visualização de que a empresa está à beira de um abismo de liquidez.",
+                    "Incorreto. O Relatório da Administração é o principal canal narrativo da gestão com o mercado. Omitir nele a natureza não recorrente de quase um terço do resultado, creditando o lucro à 'eficiência', induz o leitor a erro e agrava severamente a assimetria informacional.",
+                    "Incorreto. Nenhuma norma ou resolução *exige* a criação de uma MDDA. A exigência contábil real é a evidenciação da operação descontinuada no DRE e na Nota Explicativa. O erro real da empresa foi o tom de gerenciamento de impressões na narrativa e o inchaço informacional (Disclosure Overload)."
+                ]
+            }
+        ];
+
+        // Frases motivacionais para respostas incorretas
+        const motivationalQuotes = [
+            "O insucesso é apenas uma oportunidade para recomeçar com mais inteligência. – Henry Ford",
+            "Eu não falhei. Só descobri 10 mil caminhos que não eram o certo. – Thomas Edison",
+            "O maior erro que você pode cometer é o de ficar o tempo todo com medo de cometer algum. – Elbert Hubbard",
+            "O sucesso é ir de fracasso em fracasso sem perder o entusiasmo. – Winston Churchill",
+            "Só erra quem tenta. E só aprende quem erra!"
+        ];
+
+        const app = document.getElementById('app');
+
+        // --- SISTEMA DE NAVEGAÇÃO ---
+        function renderHome() {
+            app.innerHTML = `
+                <div class="flex-1 flex flex-col items-center justify-center text-center fade-in h-full">
+                    <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm transform rotate-3">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    </div>
+                    <h1 class="text-3xl font-black text-gray-800 mb-2 tracking-tight">Completinha S.A.</h1>
+                    <p class="text-gray-500 mb-8 text-sm font-medium">Plataforma de Casos Práticos e Simulações</p>
+                    
+                    <div class="w-full space-y-3">
+                        <button onclick="renderSeminarioMenu()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-6 rounded-2xl transition duration-200 shadow-md flex justify-between items-center group">
+                            <span>Atividades do Seminário</span>
+                            <svg class="w-5 h-5 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                        
+                        <button onclick="renderPlaceholder('Atividades Adicionais')" class="w-full bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold py-4 px-6 rounded-2xl transition duration-200 flex justify-between items-center">
+                            <span>Atividades Adicionais</span>
+                            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded-lg">Em breve</span>
+                        </button>
+                        
+                        <button onclick="renderPlaceholder('Testes de Personalidade')" class="w-full bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold py-4 px-6 rounded-2xl transition duration-200 flex justify-between items-center">
+                            <span>Testes de Personalidade</span>
+                            <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded-lg">Em breve</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPlaceholder(title) {
+            app.innerHTML = `
+                <div class="flex-1 flex flex-col items-center justify-center text-center fade-in h-full">
+                    <div class="w-16 h-16 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">${title}</h2>
+                    <p class="text-gray-500 mb-8 font-medium">Esta seção está em definição e será disponibilizada num futuro próximo.</p>
+                    <button onclick="renderHome()" class="w-full max-w-[200px] bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-6 rounded-xl transition duration-200 shadow-md">
+                        Voltar
+                    </button>
+                </div>
+            `;
+        }
+
+        function renderSeminarioMenu() {
+            app.innerHTML = `
+                <div class="fade-in flex flex-col h-full">
+                    <div class="flex items-center mb-6">
+                        <button onclick="renderHome()" class="text-gray-400 hover:text-gray-700 mr-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                        <h2 class="text-xl font-bold text-gray-800">Atividades do Seminário</h2>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-6">Selecione uma simulação baseada nas demonstrações da Completinha S.A.</p>
+                    
+                    <div class="space-y-3">
+                        <button onclick="renderActivity(0)" class="w-full text-left bg-white border border-emerald-100 hover:border-emerald-300 hover:bg-emerald-50 p-4 rounded-2xl transition duration-200 shadow-sm group">
+                            <div class="text-xs font-bold text-emerald-600 mb-1 tracking-wider uppercase">Atividade 1</div>
+                            <div class="font-bold text-gray-800">BP, DRE e DFC</div>
+                        </button>
+                        
+                        <button onclick="renderActivity(1)" class="w-full text-left bg-white border border-emerald-100 hover:border-emerald-300 hover:bg-emerald-50 p-4 rounded-2xl transition duration-200 shadow-sm group">
+                            <div class="text-xs font-bold text-emerald-600 mb-1 tracking-wider uppercase">Atividade 2</div>
+                            <div class="font-bold text-gray-800">DMPL e DVA</div>
+                        </button>
+                        
+                        <button onclick="renderActivity(2)" class="w-full text-left bg-white border border-emerald-100 hover:border-emerald-300 hover:bg-emerald-50 p-4 rounded-2xl transition duration-200 shadow-sm group">
+                            <div class="text-xs font-bold text-emerald-600 mb-1 tracking-wider uppercase">Atividade 3</div>
+                            <div class="font-bold text-gray-800">Relatório da Administração e NEs</div>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderActivity(index) {
+            const act = activities[index];
+            let optionsHtml = '';
+            
+            act.options.forEach((opt, optIndex) => {
+                optionsHtml += `
+                    <button onclick="handleAnswer(${index}, ${optIndex})" class="w-full text-left p-4 mb-3 bg-white border border-gray-200 rounded-xl hover:bg-emerald-50 active:bg-emerald-100 hover:border-emerald-300 transition duration-150 text-sm font-medium text-gray-700 leading-relaxed shadow-sm">
+                        ${opt}
+                    </button>
+                `;
+            });
+
+            app.innerHTML = `
+                <div class="fade-in flex flex-col h-full relative">
+                    <div class="sticky top-0 bg-white z-10 pb-3 border-b border-gray-100 mb-4 flex items-center justify-between">
+                        <button onclick="renderSeminarioMenu()" class="text-gray-400 hover:text-gray-700 flex items-center text-sm font-bold">
+                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Voltar
+                        </button>
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-200">${act.title.split(':')[0]}</span>
+                    </div>
+                    
+                    <div class="pb-6">
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-xl mb-6 shadow-sm">
+                            <h3 class="text-blue-800 font-bold text-xs uppercase mb-2 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                Roleplay (O Seu Papel)
+                            </h3>
+                            <p class="text-sm text-blue-900 leading-relaxed">${act.roleplay}</p>
+                        </div>
+                        
+                        ${act.panel}
+                        
+                        <h2 class="text-base font-bold text-gray-800 mb-6 leading-snug">${act.question}</h2>
+                        
+                        <div class="space-y-2">
+                            ${optionsHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+            // Scroll to top when opening activity
+            app.scrollTop = 0;
+        }
+
+        function handleAnswer(activityIndex, selectedOptionIndex) {
+            const act = activities[activityIndex];
+            const isCorrect = selectedOptionIndex === act.correctIndex;
+            const feedbackText = act.feedbacks[selectedOptionIndex];
+            
+            // Dispara Confete se estiver correto
+            if(isCorrect) {
+                confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#10b981', '#3b82f6', '#fcd34d']
+                });
+            }
+
+            const headerColor = isCorrect ? 'text-emerald-600' : 'text-orange-500';
+            const icon = isCorrect 
+                ? '<svg class="w-20 h-20 text-emerald-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
+                : '<svg class="w-20 h-20 text-orange-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
+            
+            let title = isCorrect ? 'Correto!' : 'Foi quase!';
+            
+            // Pega uma citação aleatória se errou
+            let quoteHtml = '';
+            if(!isCorrect) {
+                const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+                quoteHtml = `<div class="italic text-gray-500 text-sm mt-6 px-4 border-t border-gray-100 pt-4">"${randomQuote}"</div>`;
+            }
+
+            app.innerHTML = `
+                <div class="fade-in flex flex-col h-full text-center py-6">
+                    <div class="flex-1 mt-4">
+                        ${icon}
+                        <h2 class="text-3xl font-black ${headerColor} mb-8 tracking-tight">${title}</h2>
+                        <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200 text-left shadow-inner">
+                            <p class="text-sm text-gray-700 leading-relaxed font-medium">
+                                <span class="font-bold ${headerColor} block mb-2 uppercase tracking-wide text-xs">Análise Técnica</span> 
+                                ${feedbackText}
+                            </p>
+                        </div>
+                        ${quoteHtml}
+                    </div>
+                    <div class="mt-8">
+                        <button onclick="renderSeminarioMenu()" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-4 px-6 rounded-2xl transition duration-200 shadow-md">
+                            Voltar para as Atividades
+                        </button>
+                    </div>
+                </div>
+            `;
+            app.scrollTop = 0;
+        }
+
+        // Inicia a aplicação na tela principal
+        renderHome();
+    </script>
+</body>
+</html>
