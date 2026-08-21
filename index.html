@@ -145,7 +145,7 @@
                 ],
                 correctIndex: 1,
                 feedbacks: [
-                    "Incorreto. Uma confusão já clássica na contabidade: a depreciação NÃO é uma reserva financeira e não acumula dinheiro. Ela é somada no Método Indireto da DFC apenas para anular o efeito redutor que teve na DR (já que não representou saída de caixa no período), mas não cria liquidez alguma para pagar dívidas.",
+                    "Incorreto. Uma confusão já clássica na contabilidade: a depreciação NÃO é uma reserva financeira e não acumula dinheiro. Ela é somada no Método Indireto da DFC apenas para anular o efeito redutor que teve na DR (já que não representou saída de caixa no período), mas não cria liquidez alguma para pagar dívidas.",
                     "Perfeito! Você assumiu o papel do analista que não se ilude com a última linha da DR. O lucro utiliza o regime de competência, mas o banco é pago com caixa. O MEP e as Operações Descontinuadas representaram 55% do lucro (R$ 110.000), mas não colocaram dinheiro imediato na conta. Com R$ 380 mil vencendo e só R$ 50 mil em caixa, a empresa precisa do empréstimo para sobreviver, e não apenas para girar.",
                     "Incorreto. Você confundiu o impacto normativo. O CPC 51 afeta a apresentação ao alinhar a DR e a DFC. No entanto, classificar juros como financiamento <b>aumenta</b> (melhora) o Fluxo de Caixa Operacional, e não o contrário. A queima de caixa neste caso veio principalmente de ineficiência no capital de giro (Contas a Receber e Fornecedores).",
                     "Incorreto. Contas a Receber possui risco de crédito (inadimplência) e prazos que podem ser incertos também. Para honrar um Passivo Circulante que vence nos próximos 90 dias, recebíveis que ainda podem demorar a entrar e que não são simultanealmente 'líquidos e certos' não substituem o Caixa (Disponibilidades). Dinheiro 'na mão' e direito a receber são avaliados de formas diferentes."
@@ -224,7 +224,7 @@
                             </h3>
                             <ul class="text-lg md:text-xl text-gray-800 space-y-5 list-disc pl-6 leading-relaxed text-pretty marker:text-gray-400">
                                 <li><strong>Nota 12 (Op. Descontinuadas):</strong> <span class="bg-yellow-100/50">R$ 55 mil do lucro (27,5% do total) decorrem de ganho de capital na venda emergencial de um parque fabril desativado.</span></li>
-                                <li><strong>Nota 18 (Endividamento):</strong> R$ 380 mil vencem nos primeiros 90 dias de 2028, decorrente de políticas de expanções em 'clientes' com a concessão de prazos, consequentemente afetando o caixa e pagamentos em 2027.</li>
+                                <li><strong>Nota 18 (Endividamento):</strong> R$ 380 mil vencem nos primeiros 90 dias de 2028, decorrente de políticas de expansões em 'clientes' com a concessão de prazos, consequentemente afetando o caixa e pagamentos em 2027.</li>
                                 <li><strong>Nota 24 (Despesas por Natureza):</strong> A alegada 'redução de custos' ocorreu por <span class="bg-yellow-100/50">corte de 30% do quadro técnico e postergação de manutenção que afetam a capacidade produtiva futura</span> de maquinários.</li>
                                 <li><strong>Formato Geral:</strong> Mais de 20 páginas discorrendo sobre conceitos teóricos do CPC 00 e CPC 26, sem o detalhamento dos riscos práticos.</li>
                             </ul>
@@ -383,8 +383,9 @@
             const progressPercent = ((index + 1) / activities.length) * 100;
             
             act.options.forEach((opt, optIndex) => {
+                // AQUI FOI REMOVIDO O mb-6
                 optionsHtml += `
-                    <button id="opt-btn-${optIndex}" onclick="handleAnswer(${index}, ${optIndex})" class="w-full text-left p-6 mb-6 bg-white border-2 border-gray-200 rounded-xl hover:bg-[#fdf2f4] active:bg-gray-100 hover:border-[#97164f] transition-all duration-200 hover:-translate-y-1 hover:shadow-md text-lg md:text-xl font-medium text-gray-800 leading-relaxed shadow-sm text-pretty relative">
+                    <button id="opt-btn-${optIndex}" onclick="handleAnswer(${index}, ${optIndex})" class="w-full text-left p-6 bg-white border-2 border-gray-200 rounded-xl hover:bg-[#fdf2f4] active:bg-gray-100 hover:border-[#97164f] transition-all duration-200 hover:-translate-y-1 hover:shadow-md text-lg md:text-xl font-medium text-gray-800 leading-relaxed shadow-sm text-pretty relative">
                         ${opt}
                     </button>
                 `;
@@ -417,8 +418,9 @@
                         </div>
                         
                         <div class="w-full lg:w-[52%] flex flex-col pt-2">
-                            <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-8 leading-relaxed border-b border-gray-200 pb-5 text-pretty">${act.question}</h2>
-                            <div class="space-y-4">
+                            <h2 class="text-2xl md:text-3xl font-black text-gray-900 mb-8 leading-relaxed border-b border-gray-200 pb-5 text-pretty">${act.question}</h2>
+                            <!-- AQUI ESTÁ O FIX DE ESPAÇAMENTO: flex flex-col gap-6 garante espaçamento 100% igual -->
+                            <div class="flex flex-col gap-6">
                                 ${optionsHtml}
                             </div>
                         </div>
